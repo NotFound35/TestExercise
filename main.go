@@ -3,9 +3,9 @@ package main
 import (
 	"awesomeProject/config"
 	"awesomeProject/internal/domain/models"
-	"awesomeProject/internal/infrastructure/postgresql"
+	"awesomeProject/internal/repository/postgresql"
 	"awesomeProject/logger"
-	"fmt"
+	"go.uber.org/zap"
 	"time"
 )
 
@@ -18,16 +18,20 @@ func main() {
 	defer log.Sync()
 
 	// 3. Инициализация подключения к БД с логгером
-	db, _ := postgresql.NewPostgreSQL(cfg, log)
-	fmt.Println("коннект с БД произошел!!!")
+	db, err := postgresql.NewPostgreSQL(cfg, log)
+	if err != nil {
+		log.Error("не произошло коннекта с БД", zap.Error(err))
+	}
+	log.Info("коннект с БД произошел!!!")
 
-	defer db.Close()
-	fmt.Println("")
+	defer func() {
+		db.Close()
+		log.Info("соединение с БД закрыто!!!")
+	}()
 
 	// 4. Создание таблиц
-	if err := db.CreateTables(); err != nil {
-		fmt.Println("НЕ создалась таблица")
-	}
+	postgresql.Migrate(db)()
+	log.Info("миграции применены!!!")
 
 	// 5. Создание тестового пользователя
 	user := &models.User{
@@ -39,11 +43,10 @@ func main() {
 	}
 
 	// 6. Сохранение пользователя
-	if err := db.SaveUser(user); err != nil {
-		fmt.Println("юзер НЕ сохранен")
+	if err = db.SaveUser(user); err != nil {
+		log.Error("юзер НЕ сохранен", zap.Error(err))
 	}
 
-	fmt.Println("юзер сохранен!!!")
 }
 
 // использовать только один объект с 19ой строчки (соединения с) БД, второй удалить
