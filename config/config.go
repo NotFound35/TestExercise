@@ -1,7 +1,7 @@
+// закгрузка настроек подключения к PostgreSQL из переменных окружения .env
 package config
 
 import (
-	"fmt"
 	"os"
 	"strconv"
 
@@ -40,7 +40,7 @@ func Load() (*Config, error) {
 func MustLoad() *Config {
 	cfg, err := Load()
 	if err != nil {
-		fmt.Println("НЕ ПОЛУЧИЛАСЬ загрузка конфига")
+		panic("НЕ ПОЛУЧИЛАСЬ загрузка конфига")
 	}
 	return cfg
 }
