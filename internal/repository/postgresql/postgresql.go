@@ -37,10 +37,6 @@ func NewPostgreSQL(cfg *config.Config, logger *zap.Logger) (*PostgreSQL, error) 
 	return &PostgreSQL{db: db, logger: logger}, nil
 }
 
-func (p *PostgreSQL) GetConnection() *sql.DB {
-	return p.db
-}
-
 func (p *PostgreSQL) Close() error {
 	if err := p.db.Close(); err != nil {
 		p.logger.Error("ОШИБКА закрытия соединения с БД", zap.Error(err))
