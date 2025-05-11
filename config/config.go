@@ -4,6 +4,7 @@ package config
 import (
 	"os"
 	"strconv"
+	"time"
 
 	"github.com/joho/godotenv"
 )
@@ -15,6 +16,14 @@ type Config struct {
 	DBPassword string
 	DBName     string
 	DBSSLMode  string
+
+	Server ServerConfig
+}
+
+type ServerConfig struct {
+	Address     string
+	Timeout     time.Duration
+	IdleTimeout time.Duration
 }
 
 func Load() (*Config, error) {

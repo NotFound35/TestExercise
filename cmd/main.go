@@ -2,10 +2,13 @@ package main
 
 import (
 	"awesomeProject/config"
+	"awesomeProject/internal/controller"
+	"awesomeProject/internal/httpServer"
 	"awesomeProject/internal/repository/postgresql"
 	"awesomeProject/internal/userservice"
 	"awesomeProject/logger"
 	"go.uber.org/zap"
+	"net/http"
 )
 
 func main() {
@@ -30,4 +33,19 @@ func main() {
 		log.Error("юзер не сохранен - ОШИБКА")
 	}
 	log.Info(result)
+
+	// создание http обработчиков
+	userHandler := controller.NewUserHandler(userService, log)
+
+	// настройка маршрутов
+	router := http.NewServeMux()
+	userHandler.RegisterRoutes(router)
+
+	// создание http сервера
+	server := httpServer.New(cfg)
+	log.Info("создание сервера")
+
+	// запуск http сервера
+	server.Start(router)
+
 }
