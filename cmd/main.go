@@ -1,11 +1,12 @@
 package main
 
 import (
-	"awesomeProject/config"
+	"awesomeProject/internal/apiServer/httpServer"
+	"awesomeProject/internal/config"
 	"awesomeProject/internal/repository/postgresql"
 	"awesomeProject/internal/userservice"
 	"awesomeProject/logger"
-	"go.uber.org/zap"
+	"fmt"
 )
 
 func main() {
@@ -13,21 +14,16 @@ func main() {
 
 	log := logger.New()
 
-	db, _ := postgresql.NewPostgreSQL(cfg, log)
-
-	defer func(db *postgresql.PostgreSQL) {
-		err := db.Close()
-		if err != nil {
-			log.Error("соединение с БД НЕ закрыто", zap.Error(err))
-		}
-		log.Info("соединение с БД закрыто")
-	}(db)
+	db, err := postgresql.NewPostgreSQL(cfg, log)
+	if err != nil {
+		fmt.Println("проблема с sql.DB", err)
+	}
 
 	userService := userservice.NewUserService(db, log)
 
-	result, err := userService.SaveUser()
-	if err != nil {
-		log.Error("юзер не сохранен - ОШИБКА")
-	}
-	log.Info(result)
+	defer db.Close() // написал так, потому что в функции Сlose уже есть проверка
+
+	server := httpServer.NewServer(userService)
+
+	server.StartAndFinish(cfg) //run || ListenAndServe || ...
 }
