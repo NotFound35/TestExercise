@@ -13,12 +13,12 @@ type UserDB interface {
 // слой бизнес-логики для работы с юзерами
 type UserService struct {
 	db  UserDB
-	log *zap.Logger
+	Log *zap.Logger
 }
 
 func NewUserService(db UserDB, log *zap.Logger) *UserService {
 	return &UserService{
 		db:  db,
-		log: log,
+		Log: log,
 	}
 }

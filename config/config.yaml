@@ -1,12 +1,19 @@
+env: "local"
+
 database:
   host: "localhost"
   port: 5432
   user: "postgres"
   password: "password"
   dbname: "userStorage_db"
-  sslmode: "disable"
+  ssl_mode: "disable"
 
 logger:
   level: "debug"   # или "info", "warn", "error"
   encoding: "json"  # или "console" (для разработки)
   output_paths: ["stdout", "logs/app.log"]  # Куда писать логи
+
+http-server:
+  address: "localhost:8080"
+  timeout: 4s
+  idle_timeout: 60s
