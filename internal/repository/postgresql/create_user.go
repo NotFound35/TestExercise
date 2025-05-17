@@ -2,10 +2,11 @@ package postgresql
 
 import (
 	"awesomeProject/internal/domain/models"
-	"go.uber.org/zap"
+	"fmt"
 )
 
 func (p *PostgreSQL) SaveUser(user *models.User) error {
+	const op = "CreateUser.SaveUser"
 	query := `INSERT INTO users (id, first_name, last_name, age, recording_date) 
 	          VALUES ($1, $2, $3, $4, $5)`
 	_, err := p.db.Exec(query,
@@ -16,7 +17,7 @@ func (p *PostgreSQL) SaveUser(user *models.User) error {
 		user.RecordingDate,
 	)
 	if err != nil {
-		p.logger.Error("ОШИБКА сохранения юзера", zap.Error(err))
+		fmt.Errorf("метод %v: %v", op, err)
 		return err
 	}
 

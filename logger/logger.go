@@ -2,55 +2,75 @@
 package logger
 
 import (
+	"fmt"
 	"go.uber.org/zap"
 	"go.uber.org/zap/zapcore"
+	"os"
 )
 
 type LoggerConfig struct {
 	Level       string   `yaml:"level"`
-	Encoding    string   `yaml:"encoding"`
 	OutputPaths []string `yaml:"output_paths"`
 }
 
 // InitLogger инициализирует zap.Logger на основе конфига
 func InitLogger(cfg *LoggerConfig) (*zap.Logger, error) {
+	const op = "InitLogger"
+
 	// Настраиваем уровень логирования
 	var level zapcore.Level
 	if err := level.UnmarshalText([]byte(cfg.Level)); err != nil {
 		return nil, err
 	}
 
-	// Конфиг zap
-	zapConfig := zap.Config{
-		Level:            zap.NewAtomicLevelAt(level),
-		Encoding:         cfg.Encoding,
-		OutputPaths:      cfg.OutputPaths,
-		ErrorOutputPaths: []string{"stderr"},
-		EncoderConfig: zapcore.EncoderConfig{
-			TimeKey:        "ts",
-			LevelKey:       "level",
-			NameKey:        "logger",
-			CallerKey:      "caller",
-			FunctionKey:    zapcore.OmitKey,
-			MessageKey:     "msg",
-			StacktraceKey:  "stacktrace",
-			LineEnding:     zapcore.DefaultLineEnding,
-			EncodeLevel:    zapcore.LowercaseLevelEncoder,
-			EncodeTime:     zapcore.ISO8601TimeEncoder,
-			EncodeDuration: zapcore.StringDurationEncoder,
-			EncodeCaller:   zapcore.ShortCallerEncoder,
-		},
+	// создание конфигурации для текстового вывода
+	encoderConfig := zapcore.EncoderConfig{
+		TimeKey:        "ts",
+		LevelKey:       "level",
+		NameKey:        "logger",
+		CallerKey:      "caller",
+		FunctionKey:    zapcore.OmitKey,
+		MessageKey:     "msg",
+		StacktraceKey:  "stacktrace",
+		LineEnding:     zapcore.DefaultLineEnding,
+		EncodeLevel:    zapcore.CapitalLevelEncoder,
+		EncodeTime:     zapcore.ISO8601TimeEncoder,
+		EncodeDuration: zapcore.SecondsDurationEncoder,
+		EncodeCaller:   zapcore.ShortCallerEncoder,
 	}
 
-	logger, err := zapConfig.Build()
+	// создание файлового вывода
+	file, err := os.OpenFile("logs.txt", os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
 	if err != nil {
-		return nil, err
+		return nil, fmt.Errorf("функция %s: %w", op, err)
 	}
 
-	return logger, nil
+	// настройка вывода в файл и консоль
+	fileWriteSyncer := zapcore.AddSync(file)
+	consoleWriteSyncer := zapcore.AddSync(os.Stdout)
+
+	core := zapcore.NewTee(
+		zapcore.NewCore(
+			zapcore.NewConsoleEncoder(encoderConfig),
+			fileWriteSyncer,
+			level,
+		),
+		zapcore.NewCore(
+			zapcore.NewConsoleEncoder(encoderConfig),
+			consoleWriteSyncer,
+			level,
+		),
+	)
+
+	return zap.New(core, zap.AddCaller()), nil
 }
 
 func New() *zap.Logger {
-	log, _ := zap.NewProduction()
-	return log
+	// создание простого логгера с выводом в файл и консоль
+	cfg := &LoggerConfig{
+		Level:       "info",
+		OutputPaths: []string{"logs.txt", "stdout"},
+	}
+	logger, _ := InitLogger(cfg)
+	return logger
 }

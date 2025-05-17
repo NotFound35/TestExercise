@@ -7,6 +7,7 @@ import (
 )
 
 func (u *UserService) SaveUser(user *models.User) (string, error) { // прокинуть сюда модель *models.User, когда буду писать API - передавать его сверху
+	const op = "SaveUser"
 	if u.db == nil {
 		return "", errors.New("БД не init")
 	}

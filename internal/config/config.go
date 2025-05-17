@@ -2,8 +2,8 @@
 package config
 
 import (
+	"fmt"
 	"github.com/ilyakaznacheev/cleanenv"
-	"log"
 	"os"
 	"time"
 )
@@ -16,15 +16,16 @@ type Config struct {
 }
 
 func MustLoad() *Config {
+	const op = "MustLoad"
 	configPath := "config/config.yaml"
 
 	if _, err := os.Stat(configPath); os.IsNotExist(err) {
-		log.Fatalln("ОШИБКА - файла конфига не существует")
+		fmt.Errorf("функция %v: %v", op, err)
 	}
 
 	var cfg Config
 	if err := cleanenv.ReadConfig(configPath, &cfg); err != nil {
-		log.Fatalln("ОШИБКА - конфиг не читается")
+		fmt.Errorf("функция %v: %v", op, err)
 	}
 
 	return &cfg

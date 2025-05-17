@@ -21,9 +21,9 @@ func main() {
 
 	userService := userservice.NewUserService(db, log)
 
-	defer db.Close() // написал так, потому что в функции Сlose уже есть проверка
+	defer db.Close()
 
 	server := httpServer.NewServer(userService)
 
-	server.StartAndFinish(cfg) //run || ListenAndServe || ...
+	server.Run(cfg)
 }
