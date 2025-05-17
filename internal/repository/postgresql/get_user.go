@@ -5,5 +5,5 @@ import (
 )
 
 func (r *PostgreSQL) GetUser(id string) (*models.User, error) {
-	panic("implement me")
+	panic("создай меня")
 }

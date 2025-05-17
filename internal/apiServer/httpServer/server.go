@@ -8,7 +8,6 @@ import (
 	"errors"
 	"fmt"
 	"github.com/go-chi/chi/v5"
-	"log"
 	"net/http"
 	"os"
 	"os/signal"
@@ -30,7 +29,8 @@ func NewServer(u *userservice.UserService) *Server {
 	return server
 }
 
-func (s *Server) StartAndFinish(cfg *config.Config) {
+func (s *Server) Run(cfg *config.Config) {
+	const op = "Run"
 	fmt.Println("Cервер запущен")
 	server := &http.Server{
 		Addr:         cfg.HTTPServer.Address,
@@ -46,7 +46,7 @@ func (s *Server) StartAndFinish(cfg *config.Config) {
 		fmt.Println("Ожидание запросов")
 		err := http.ListenAndServe(cfg.HTTPServer.Address, s.router)
 		if err != nil && !errors.Is(err, http.ErrServerClosed) {
-			log.Fatalln("Критическая ошибка сервера")
+			fmt.Errorf("метод %v: %v", op, err)
 		}
 	}()
 
@@ -57,16 +57,17 @@ func (s *Server) StartAndFinish(cfg *config.Config) {
 
 	err := server.Shutdown(ctx)
 	if err != nil {
-		log.Fatalln("Сервер завершен НЕ корректно")
+		fmt.Errorf("метод %v: %v", op, err)
 	}
 	fmt.Println("Сервер завершен КОРРЕКТНО")
 }
 
 func (s *Server) Middleware(next http.Handler) http.Handler {
+	const op = "Middleware"
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		defer func() {
 			if err := recover(); err != nil {
-				log.Println("восстановлено после паники")
+				fmt.Errorf("метод %v: %v", op, err)
 				w.WriteHeader(http.StatusInternalServerError)
 			}
 		}()
@@ -75,10 +76,11 @@ func (s *Server) Middleware(next http.Handler) http.Handler {
 }
 
 func (s *Server) setupRoutes() {
+	const op = "setupRoutes"
 	s.router.Get("/", func(w http.ResponseWriter, r *http.Request) {
 		_, err := w.Write([]byte("Сервер работает")) //проверка работоспособности сервера
 		if err != nil {
-			log.Fatalln("Миша, все фигня, давай по новой")
+			fmt.Errorf("метод %v: %v", op, err)
 		}
 	})
 	s.router.Post("/users", s.handlers.SaveUserHandler) //регистрация обработчика для POST-запросов

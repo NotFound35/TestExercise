@@ -28,11 +28,11 @@ func NewPostgreSQL(cfg *config.Config, logger *zap.Logger) (*PostgreSQL, error) 
 
 	db, err := sql.Open("postgres", connStr)
 	if err != nil {
-		return nil, fmt.Errorf("ОШИБКА открытия коннекта с БД")
+		return nil, fmt.Errorf("функция %v: %v", op, err)
 	}
 
 	if err := db.Ping(); err != nil {
-		return nil, fmt.Errorf("метод %v: %v\n ", op, err)
+		return nil, fmt.Errorf("функция %v: %v ", op, err)
 	}
 
 	logger.Info("успешный коннект с PostgreSQL")
@@ -41,8 +41,9 @@ func NewPostgreSQL(cfg *config.Config, logger *zap.Logger) (*PostgreSQL, error) 
 }
 
 func (p *PostgreSQL) Close() error {
+	const op = "Close"
 	if err := p.db.Close(); err != nil {
-		p.logger.Error("ОШИБКА закрытия соединения с БД", zap.Error(err))
+		fmt.Errorf("метод %v: %v", op, err)
 		return err
 	}
 	p.logger.Info("соединения с БД закрыто - УСПЕХ!!!")

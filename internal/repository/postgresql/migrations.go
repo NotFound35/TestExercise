@@ -1,10 +1,11 @@
 package postgresql
 
 import (
-	"go.uber.org/zap"
+	"fmt"
 )
 
 func (p *PostgreSQL) CreateTables() error {
+	const op = "CreateTables"
 	p.logger.Info("начало миграций")
 	query := `
 	CREATE TABLE IF NOT EXISTS users (
@@ -18,7 +19,7 @@ func (p *PostgreSQL) CreateTables() error {
 
 	_, err := p.db.Exec(query)
 	if err != nil {
-		p.logger.Error("ОШИБКА создания таблицы", zap.Error(err))
+		fmt.Errorf("метод %v: %v", op, err)
 		return err
 	}
 
