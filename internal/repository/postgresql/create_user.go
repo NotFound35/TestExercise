@@ -3,22 +3,25 @@ package postgresql
 import (
 	"awesomeProject/internal/domain/models"
 	"fmt"
+	"github.com/google/uuid"
+	"time"
 )
 
 func (p *PostgreSQL) SaveUser(user *models.User) error {
 	const op = "CreateUser.SaveUser"
+
 	query := `INSERT INTO users (id, first_name, last_name, age, recording_date) 
 	          VALUES ($1, $2, $3, $4, $5)`
 	_, err := p.db.Exec(query,
-		user.ID,
+		uuid.New(),
 		user.FirstName,
 		user.LastName,
 		user.Age,
-		user.RecordingDate,
+		time.Now(),
 	)
+
 	if err != nil {
-		fmt.Errorf("метод %v: %v", op, err)
-		return err
+		return fmt.Errorf("op: %v, error: %v", op, err)
 	}
 
 	p.logger.Info("юзер сохранен - УСПЕХ!!!")

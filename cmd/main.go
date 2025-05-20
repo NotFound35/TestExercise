@@ -16,14 +16,14 @@ func main() {
 
 	db, err := postgresql.NewPostgreSQL(cfg, log)
 	if err != nil {
-		fmt.Println("проблема с sql.DB", err)
+		fmt.Println("проблема с соединения с бд", err)
 	}
 
 	userService := userservice.NewUserService(db, log)
 
 	defer db.Close()
 
-	server := httpServer.NewServer(userService)
+	server := httpServer.NewServer(userService, log)
 
 	server.Run(cfg)
 }
