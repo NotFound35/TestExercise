@@ -8,6 +8,7 @@ import (
 	"errors"
 	"fmt"
 	"github.com/go-chi/chi/v5"
+	"go.uber.org/zap"
 	"net/http"
 	"os"
 	"os/signal"
@@ -20,10 +21,10 @@ type Server struct {
 }
 
 // init server
-func NewServer(u *userservice.UserService) *Server {
+func NewServer(u *userservice.UserService, log *zap.Logger) *Server {
 	server := &Server{
 		router:   chi.NewRouter(),
-		handlers: controller.NewHandler(u),
+		handlers: controller.NewHandler(u, log),
 	}
 	server.setupRoutes()
 	return server
@@ -84,6 +85,7 @@ func (s *Server) setupRoutes() {
 		}
 	})
 	s.router.Post("/users", s.handlers.SaveUserHandler) //регистрация обработчика для POST-запросов
+	//todo новый endpoint -> на новый handler s.handlers.GetUserHandler
 }
 
 /*Запись ответа:
