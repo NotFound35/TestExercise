@@ -14,3 +14,7 @@ func (u *UserService) UserSave(user *models.User) error {
 	}
 	return nil
 }
+
+func (u *UserService) UserGet(firstName, lastName string, age int) ([]models.User, error) {
+	return u.db.GetUserPostgreSQL(firstName, lastName, age)
+}
