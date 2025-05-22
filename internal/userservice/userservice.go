@@ -8,9 +8,9 @@ import (
 // интерфейс, который определяет контракт для работы с БД
 type UserDB interface {
 	SaveUser(user *models.User) error
+	GetUserPostgreSQL(firstName, lastName string, age int) ([]models.User, error)
 }
 
-// слой бизнес-логики для работы с юзерами
 type UserService struct {
 	db  UserDB
 	Log *zap.Logger

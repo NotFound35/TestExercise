@@ -84,8 +84,9 @@ func (s *Server) setupRoutes() {
 			fmt.Errorf("метод %v: %v", op, err)
 		}
 	})
-	s.router.Post("/users", s.handlers.SaveUserHandler) //регистрация обработчика для POST-запросов
-	//todo новый endpoint -> на новый handler s.handlers.GetUserHandler
+
+	s.router.Post("/users", s.handlers.SaveUserHandler)      //регистрация обработчика для POST-запросов
+	s.router.Get("/users/search", s.handlers.GetUserHandler) //todo новый endpoint -> на новый handler s.handlers.GetUserHandler
 }
 
 /*Запись ответа:
