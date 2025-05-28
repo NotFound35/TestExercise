@@ -16,8 +16,8 @@ func (u *UserService) UserSave(user *models.User) error {
 	return nil
 }
 
-func (u *UserService) UserGet(firstName, lastName string, age int) ([]models.User, error) {
-	return u.db.GetUserPostgreSQL(firstName, lastName, age)
+func (u *UserService) UserGet(ctx context.Context, firstName, lastName string, age int) ([]models.User, error) {
+	return u.db.GetUserPostgreSQL(ctx, firstName, lastName, age)
 }
 
 func (u *UserService) UsersList(

@@ -13,7 +13,7 @@ import (
 
 type ListUsersResponse struct {
 	Users  []models.User `json:"users"`
-	Errors []string      `json:"errors,omitempty"` // Убрали поле Count
+	Errors []string      `json:"errors,omitempty"`
 }
 
 type ListUsersParams struct {
