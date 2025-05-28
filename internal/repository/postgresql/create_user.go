@@ -18,7 +18,7 @@ func (p *PostgreSQL) SaveUser(ctx context.Context, user *models.User) error {
 		user.FirstName,
 		user.LastName,
 		user.Age,
-		time.Now(),
+		time.Now().Unix(),
 	)
 
 	if err != nil {
