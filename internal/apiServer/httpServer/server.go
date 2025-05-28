@@ -1,7 +1,7 @@
 package httpServer
 
 import (
-	"awesomeProject/internal/apiServer/controller"
+	"awesomeProject/internal/apiServer/controllers"
 	"awesomeProject/internal/config"
 	"awesomeProject/internal/userservice"
 	"context"
@@ -16,15 +16,15 @@ import (
 )
 
 type Server struct {
-	router   *chi.Mux //TODO what is it?
-	handlers *controller.Handler
+	router   *chi.Mux
+	handlers *controllers.Handler
 }
 
 // init server
 func NewServer(u *userservice.UserService, log *zap.Logger) *Server {
 	server := &Server{
 		router:   chi.NewRouter(),
-		handlers: controller.NewHandler(u, log),
+		handlers: controllers.NewHandler(u, log),
 	}
 	server.setupRoutes()
 	return server
@@ -87,6 +87,7 @@ func (s *Server) setupRoutes() {
 
 	s.router.Post("/users", s.handlers.SaveUserHandler)      //регистрация обработчика для POST-запросов
 	s.router.Get("/users/search", s.handlers.GetUserHandler) //todo новый endpoint -> на новый handler s.handlers.GetUserHandler
+	s.router.Get("/users/list", s.handlers.ListUsersHandler)
 }
 
 /*Запись ответа:

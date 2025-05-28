@@ -2,13 +2,15 @@ package userservice
 
 import (
 	"awesomeProject/internal/domain/models"
+	"context"
 	"go.uber.org/zap"
 )
 
 // интерфейс, который определяет контракт для работы с БД
 type UserDB interface {
 	SaveUser(user *models.User) error
-	GetUserPostgreSQL(firstName, lastName string, age int) ([]models.User, error)
+	GetUserPostgreSQL(ctx context.Context, firstName, lastName string, age int) ([]models.User, error)
+	ListUsersPostgreSQL(ctx context.Context, minAge, maxAge *int, startDate, endDate *int64) ([]models.User, error)
 }
 
 type UserService struct {

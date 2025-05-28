@@ -2,10 +2,11 @@ package postgresql
 
 import (
 	"awesomeProject/internal/domain/models"
+	"context"
 	"fmt"
 )
 
-func (p *PostgreSQL) GetUserPostgreSQL(firstName, lastName string, age int) ([]models.User, error) {
+func (p *PostgreSQL) GetUserPostgreSQL(ctx context.Context, firstName, lastName string, age int) ([]models.User, error) {
 	const op = "GetUserPostgreSQL"
 
 	//инициализация базового запроса и переменных
@@ -32,7 +33,7 @@ func (p *PostgreSQL) GetUserPostgreSQL(firstName, lastName string, age int) ([]m
 	}
 
 	//выполнение SQL-запроса
-	result, err := p.db.Query(query, search...)
+	result, err := p.db.QueryContext(ctx, query, search...)
 	if err != nil {
 		return nil, fmt.Errorf("op: %s, %w", op, err)
 	}
