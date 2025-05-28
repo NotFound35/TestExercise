@@ -2,11 +2,13 @@ package controllers
 
 import (
 	"awesomeProject/internal/domain/models"
+	"context"
 	"encoding/json"
 	"fmt"
 	"go.uber.org/zap"
 	"net/http"
 	"strings"
+	"time"
 )
 
 type Request struct {
@@ -24,6 +26,9 @@ type Response struct {
 
 func (h *Handler) SaveUserHandler(w http.ResponseWriter, r *http.Request) {
 	const op = "Handler.SaveUserHandler"
+	ctx, cancel := context.WithTimeout(r.Context(), 10*time.Second)
+	defer cancel()
+
 	var req Request
 
 	//нужно, чтобы JSON был такой же, как и Request
@@ -51,7 +56,7 @@ func (h *Handler) SaveUserHandler(w http.ResponseWriter, r *http.Request) {
 		Age:       req.User.Age,
 	}
 
-	err := h.userService.UserSave(user)
+	err := h.userService.UserSave(ctx, user)
 	if err != nil {
 		h.log.Error("юзер не сохранен",
 			zap.String("op", op),
