@@ -6,7 +6,6 @@ import (
 	"go.uber.org/zap"
 )
 
-// интерфейс, который определяет контракт для работы с БД
 type UserDB interface {
 	SaveUser(ctx context.Context, user *models.User) error
 	GetUserPostgreSQL(ctx context.Context, firstName, lastName string, age int) ([]models.User, error)

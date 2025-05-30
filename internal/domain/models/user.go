@@ -5,5 +5,5 @@ type User struct {
 	FirstName     string `json:"first_name"`
 	LastName      string `json:"last_name"`
 	Age           int    `json:"age"`
-	RecordingDate int64  `json:"recording_date"` // Unix timestamp
+	RecordingDate int64  `json:"recording_date"`
 }

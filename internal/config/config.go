@@ -1,4 +1,3 @@
-// закгрузка настроек подключения к PostgreSQL из переменных окружения .env
 package config
 
 import (
@@ -42,7 +41,7 @@ type Database struct {
 type Logger struct {
 	Level       string   `yaml:"level"`
 	Encoding    string   `yaml:"encoding"`
-	OutputPaths []string `yaml:"output_paths"` //сделать так: чтобы логи сохранялись в текстовый файл в корне проекта
+	OutputPaths []string `yaml:"output_paths"`
 }
 
 type HTTPServer struct {

@@ -20,20 +20,18 @@ func (p *PostgreSQL) ListUsersPostgreSQL(
 			($2::int IS NULL OR age <= $2) AND
 			($3::bigint IS NULL OR recording_date >= $3) AND
 			($4::bigint IS NULL OR recording_date <= $4)
-	` //NULL - если не указано то пофиг
+	`
 
-	//запрос в БД с параметрами
 	result, err := p.db.QueryContext(ctx, query, minAge, maxAge, startDate, endDate)
 	if err != nil {
 		return nil, fmt.Errorf("op: %s, %w", op, err)
 	}
 	defer result.Close()
 
-	//чтение результата
 	var users []models.User
-	for result.Next() { //перебор строк
+	for result.Next() {
 		var user models.User
-		err := result.Scan( //копирование строк из БД в структуру User
+		err := result.Scan(
 			&user.ID,
 			&user.FirstName,
 			&user.LastName,
@@ -43,7 +41,7 @@ func (p *PostgreSQL) ListUsersPostgreSQL(
 		if err != nil {
 			return nil, fmt.Errorf("op: %s, %w", op, err)
 		}
-		users = append(users, user) //добавление пользователей в итоговой список
+		users = append(users, user)
 	}
 
 	return users, nil

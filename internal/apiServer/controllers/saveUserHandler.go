@@ -20,7 +20,7 @@ type Request struct {
 }
 
 type Response struct {
-	Message string   `json:"message,omitempty"` //omitempty - не выводить, если пусто
+	Message string   `json:"message,omitempty"`
 	Errors  []string `json:"errors,omitempty"`
 }
 
@@ -31,7 +31,6 @@ func (h *Handler) SaveUserHandler(w http.ResponseWriter, r *http.Request) {
 
 	var req Request
 
-	//нужно, чтобы JSON был такой же, как и Request
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
 		h.log.Error("ошибка декодирования кода",
 			zap.String("op", op),
