@@ -62,7 +62,6 @@ func (h *Handler) GetUserHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	//формирование ответика
 	respondWithJSON(w, http.StatusOK, map[string]interface{}{
 		"answer": users,
 	})

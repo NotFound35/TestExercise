@@ -11,8 +11,8 @@ func (p *PostgreSQL) GetUserPostgreSQL(ctx context.Context, firstName, lastName 
 
 	//инициализация базового запроса и переменных
 	query := "SELECT id, first_name, last_name, age FROM users WHERE 1=1"
-	var search []interface{} //для хранения параметров запроса
-	var answer []models.User //для хранения результатов
+	var search []interface{}
+	var answer []models.User
 	paramCnt := 1
 
 	if firstName != "" {
@@ -32,7 +32,6 @@ func (p *PostgreSQL) GetUserPostgreSQL(ctx context.Context, firstName, lastName 
 		search = append(search, age)
 	}
 
-	//выполнение SQL-запроса
 	result, err := p.db.QueryContext(ctx, query, search...)
 	if err != nil {
 		return nil, fmt.Errorf("op: %s, %w", op, err)

@@ -85,12 +85,7 @@ func (s *Server) setupRoutes() {
 		}
 	})
 
-	s.router.Post("/users", s.handlers.SaveUserHandler)      //регистрация обработчика для POST-запросов
-	s.router.Get("/users/search", s.handlers.GetUserHandler) //todo новый endpoint -> на новый handler s.handlers.GetUserHandler
+	s.router.Post("/users", s.handlers.SaveUserHandler)
+	s.router.Get("/users/search", s.handlers.GetUserHandler)
 	s.router.Get("/users/list", s.handlers.ListUsersHandler)
 }
-
-/*Запись ответа:
-w.Write отправляет клиенту сырые байты
-Конвертирует строку "Сервер работат" в байтовый срез ([]byte)
-Возвращает количество записанных байт и ошибку (количество игнорируется через _)*/

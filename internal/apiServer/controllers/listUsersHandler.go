@@ -25,12 +25,12 @@ type ListUsersParams struct {
 
 func (h *Handler) ListUsersHandler(w http.ResponseWriter, r *http.Request) {
 	const op = "Handler.ListUsersHandler"
-	ctx, cancel := context.WithTimeout(r.Context(), 10*time.Second) //получение контекста из запроса
+	ctx, cancel := context.WithTimeout(r.Context(), 10*time.Second)
 	defer cancel()
 
 	var params ListUsersParams
 
-	query := r.URL.Query() //получение всех параметров
+	query := r.URL.Query()
 
 	if minAgeStr := query.Get("min_age"); minAgeStr != "" {
 		if age, err := strconv.Atoi(minAgeStr); err == nil {
@@ -97,11 +97,10 @@ func (h *Handler) ListUsersHandler(w http.ResponseWriter, r *http.Request) {
 		h.log.Error("ошибка при получении пользователей",
 			zap.String("op", op),
 			zap.Error(err))
-		respondWithError(w, http.StatusInternalServerError, "ошибка сервера") //отправление ошибки клиенту
+		respondWithError(w, http.StatusInternalServerError, "ошибка сервера")
 		return
 	}
 
-	//формирование ответика
 	respondWithJSON(w, http.StatusOK, ListUsersResponse{
 		Users: users,
 	})
@@ -140,5 +139,3 @@ func ValidationListUsers(params ListUsersParams) error {
 
 	return nil
 }
-
-//Парсинг параметров — это «перевод» строк из URL в типы данных, которые понимает моя программа.
