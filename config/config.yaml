@@ -1,7 +1,7 @@
 env: "local"
 
 database:
-  host: "localhost"
+  host: "localhost" #"postgres"
   port: 5432
   user: "postgres"
   password: "password"
