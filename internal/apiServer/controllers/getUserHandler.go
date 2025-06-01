@@ -35,7 +35,7 @@ func (h *Handler) GetUserHandler(w http.ResponseWriter, r *http.Request) {
 	if ageStr := query.Get("age"); ageStr != "" {
 		age, err := strconv.Atoi(ageStr)
 		if err != nil {
-			h.log.Error("ошибка преобразования возраста",
+			h.Log.Error("ошибка преобразования возраста",
 				zap.String("op", op),
 				zap.String("value", ageStr),
 				zap.Error(err))
@@ -46,16 +46,16 @@ func (h *Handler) GetUserHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if err := ValidateGetUserParams(params); err != nil {
-		h.log.Error("валидация не пройдена",
+		h.Log.Error("валидация не пройдена",
 			zap.String("op", op),
 			zap.Error(err))
 		respondWithError(w, http.StatusBadRequest, err.Error())
 		return
 	}
 
-	users, err := h.userService.UserGet(ctx, params.firstName, params.lastName, *params.age)
+	users, err := h.UserService.UserGet(ctx, params.firstName, params.lastName, *params.age)
 	if err != nil {
-		h.log.Error("ошибка при получении пользователей",
+		h.Log.Error("ошибка при получении пользователей",
 			zap.String("op", op),
 			zap.Error(err))
 		respondWithError(w, http.StatusInternalServerError, "ошибка сервера")

@@ -9,8 +9,8 @@ import (
 )
 
 type PostgreSQL struct {
-	db     *sql.DB
-	logger *zap.Logger
+	Db     *sql.DB
+	Logger *zap.Logger
 }
 
 func NewPostgreSQL(cfg *config.Config, logger *zap.Logger) (*PostgreSQL, error) {
@@ -37,15 +37,15 @@ func NewPostgreSQL(cfg *config.Config, logger *zap.Logger) (*PostgreSQL, error) 
 
 	logger.Info("успешный коннект с PostgreSQL")
 
-	return &PostgreSQL{db: db, logger: logger}, nil
+	return &PostgreSQL{Db: db, Logger: logger}, nil
 }
 
 func (p *PostgreSQL) Close() error {
 	const op = "Close"
-	if err := p.db.Close(); err != nil {
+	if err := p.Db.Close(); err != nil {
 		fmt.Errorf("метод %v: %v", op, err)
 		return err
 	}
-	p.logger.Info("соединения с БД закрыто - УСПЕХ!!!")
+	p.Logger.Info("соединения с БД закрыто - УСПЕХ!!!")
 	return nil
 }

@@ -32,7 +32,7 @@ func (p *PostgreSQL) GetUserPostgreSQL(ctx context.Context, firstName, lastName 
 		search = append(search, age)
 	}
 
-	result, err := p.db.QueryContext(ctx, query, search...)
+	result, err := p.Db.QueryContext(ctx, query, search...)
 	if err != nil {
 		return nil, fmt.Errorf("op: %s, %w", op, err)
 	}

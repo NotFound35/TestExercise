@@ -32,7 +32,7 @@ func (h *Handler) SaveUserHandler(w http.ResponseWriter, r *http.Request) {
 	var req Request
 
 	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
-		h.log.Error("ошибка декодирования кода",
+		h.Log.Error("ошибка декодирования кода",
 			zap.String("op", op),
 			zap.Error(err),
 		)
@@ -41,7 +41,7 @@ func (h *Handler) SaveUserHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if err := Validation(req); err != nil {
-		h.log.Error("валидация не пройдена",
+		h.Log.Error("валидация не пройдена",
 			zap.String("op", op),
 			zap.Error(err),
 		)
@@ -55,9 +55,9 @@ func (h *Handler) SaveUserHandler(w http.ResponseWriter, r *http.Request) {
 		Age:       req.User.Age,
 	}
 
-	err := h.userService.UserSave(ctx, user)
+	err := h.UserService.UserSave(ctx, user)
 	if err != nil {
-		h.log.Error("юзер не сохранен",
+		h.Log.Error("юзер не сохранен",
 			zap.String("op", op),
 			zap.Error(err),
 		)

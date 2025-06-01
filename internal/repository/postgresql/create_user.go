@@ -13,7 +13,7 @@ func (p *PostgreSQL) SaveUser(ctx context.Context, user *models.User) error {
 
 	query := `INSERT INTO users (id, first_name, last_name, age, recording_date) 
 	          VALUES ($1, $2, $3, $4, $5)`
-	_, err := p.db.ExecContext(ctx, query,
+	_, err := p.Db.ExecContext(ctx, query,
 		uuid.New(),
 		user.FirstName,
 		user.LastName,
@@ -25,6 +25,6 @@ func (p *PostgreSQL) SaveUser(ctx context.Context, user *models.User) error {
 		return fmt.Errorf("op: %v, error: %v", op, err)
 	}
 
-	p.logger.Info("юзер сохранен - УСПЕХ!!!")
+	p.Logger.Info("юзер сохранен - УСПЕХ!!!")
 	return nil
 }

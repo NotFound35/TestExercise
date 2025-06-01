@@ -10,7 +10,7 @@ import (
 func (u *UserService) UserSave(ctx context.Context, user *models.User) error {
 	const op = "SaveUser"
 
-	err := u.db.SaveUser(ctx, user)
+	err := u.Db.SaveUser(ctx, user)
 	if err != nil {
 		u.Log.Error("ошибка сохранения юзера",
 			zap.String("op", op),
@@ -21,7 +21,7 @@ func (u *UserService) UserSave(ctx context.Context, user *models.User) error {
 }
 
 func (u *UserService) UserGet(ctx context.Context, firstName, lastName string, age int) ([]models.User, error) {
-	return u.db.GetUserPostgreSQL(ctx, firstName, lastName, age)
+	return u.Db.GetUserPostgreSQL(ctx, firstName, lastName, age)
 }
 
 func (u *UserService) UsersList(
@@ -29,5 +29,5 @@ func (u *UserService) UsersList(
 	minAge, maxAge *int,
 	startDate, endDate *int64,
 ) ([]models.User, error) {
-	return u.db.ListUsersPostgreSQL(ctx, minAge, maxAge, startDate, endDate)
+	return u.Db.ListUsersPostgreSQL(ctx, minAge, maxAge, startDate, endDate)
 }
