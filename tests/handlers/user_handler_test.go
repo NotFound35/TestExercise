@@ -19,6 +19,7 @@ import (
 	"go.uber.org/zap"
 )
 
+// todo 1 мок бд
 type MockUserDB struct {
 	mock.Mock
 }

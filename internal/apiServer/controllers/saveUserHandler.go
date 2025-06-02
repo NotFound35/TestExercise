@@ -36,7 +36,7 @@ func (h *Handler) SaveUserHandler(w http.ResponseWriter, r *http.Request) {
 			zap.String("op", op),
 			zap.Error(err),
 		)
-		respondWithError(w, http.StatusBadRequest, "неверный JSON")
+		responseWithError(w, http.StatusBadRequest, "неверный JSON")
 		return //ОБЯЗАТЕЛЬНО
 	}
 
@@ -45,7 +45,7 @@ func (h *Handler) SaveUserHandler(w http.ResponseWriter, r *http.Request) {
 			zap.String("op", op),
 			zap.Error(err),
 		)
-		respondWithError(w, http.StatusBadRequest, err.Error())
+		responseWithError(w, http.StatusBadRequest, err.Error())
 		return
 	}
 
@@ -57,15 +57,17 @@ func (h *Handler) SaveUserHandler(w http.ResponseWriter, r *http.Request) {
 
 	err := h.UserService.UserSave(ctx, user)
 	if err != nil {
+		//todo логгирование 2, при ошибке одна и та же ошибка залогируется дважды
+		// надо убрать логгирование на нижнем слое, избыточный лог
 		h.Log.Error("юзер не сохранен",
 			zap.String("op", op),
 			zap.Error(err),
 		)
-		respondWithError(w, http.StatusInternalServerError, "ошибка при сохранении")
+		responseWithError(w, http.StatusInternalServerError, "ошибка при сохранении")
 		return
 	}
 
-	respondWithJSON(w, http.StatusCreated, Response{
+	responseWithJson(w, http.StatusCreated, Response{
 		Message: fmt.Sprintf("пользователь %s успешно сохранен", user.FirstName),
 	})
 

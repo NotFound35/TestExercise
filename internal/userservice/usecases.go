@@ -12,9 +12,11 @@ func (u *UserService) UserSave(ctx context.Context, user *models.User) error {
 
 	err := u.Db.SaveUser(ctx, user)
 	if err != nil {
+		//todo логгирование 1
 		u.Log.Error("ошибка сохранения юзера",
 			zap.String("op", op),
 			zap.Error(err))
+		//todo возврат залогированной ошибки и теперь поднимись в хэндлер
 		return fmt.Errorf("метод: %s: %w", op, err)
 	}
 	return nil

@@ -19,6 +19,7 @@ func MustLoad() *Config {
 	configPath := "config/config.yaml"
 
 	if _, err := os.Stat(configPath); os.IsNotExist(err) {
+		//todo log / return
 		fmt.Errorf("функция %v: %v", op, err)
 	}
 
