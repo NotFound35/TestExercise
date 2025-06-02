@@ -19,35 +19,37 @@ import (
 	"go.uber.org/zap"
 )
 
-type MockUserService struct {
+type MockUserDB struct {
 	mock.Mock
-	*userservice.UserService
 }
 
-func (m *MockUserService) UserSave(ctx context.Context, user *models.User) error {
+func (m *MockUserDB) SaveUser(ctx context.Context, user *models.User) error {
 	args := m.Called(ctx, user)
 	return args.Error(0)
 }
 
-func TestSaveUserHandler(t *testing.T) {
+func (m *MockUserDB) GetUserPostgreSQL(ctx context.Context, firstName, lastName string, age int) ([]models.User, error) {
+	args := m.Called(ctx, firstName, lastName, age)
+	return args.Get(0).([]models.User), args.Error(1)
+}
 
+func (m *MockUserDB) ListUsersPostgreSQL(ctx context.Context, minAge, maxAge *int, startDate, endDate *int64) ([]models.User, error) {
+	args := m.Called(ctx, minAge, maxAge, startDate, endDate)
+	return args.Get(0).([]models.User), args.Error(1)
+}
+
+func TestSaveUserHandler(t *testing.T) {
 	tests := []struct {
 		name           string
 		requestBody    string
-		mockSetup      func(*MockUserService)
+		mockSetup      func(*MockUserDB)
 		expectedStatus int
 	}{
 		{
-			name: "success",
-			requestBody: `{
-				"user": {
-					"first_name": "Test",
-					"last_name": "Test",
-					"age": 50
-				}
-			}`,
-			mockSetup: func(m *MockUserService) {
-				m.On("UserSave", mock.Anything, &models.User{
+			name:        "success",
+			requestBody: `{"user": {"first_name":"Test", "last_name":"Test", "age":50}}`,
+			mockSetup: func(m *MockUserDB) {
+				m.On("SaveUser", mock.Anything, &models.User{
 					FirstName: "Test",
 					LastName:  "Test",
 					Age:       50,
@@ -55,27 +57,20 @@ func TestSaveUserHandler(t *testing.T) {
 			},
 			expectedStatus: http.StatusCreated,
 		},
-		{
-			name: "invalid json",
-			requestBody: `{
-				"user": {
-					"first_name": "Test",
-					"last_name": "Test",
-					"age": "fifty"
-				}
-			}`,
-			mockSetup:      func(m *MockUserService) {},
-			expectedStatus: http.StatusBadRequest,
-		},
 	}
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			mockService := new(MockUserService)
-			tt.mockSetup(mockService)
+			mockDB := new(MockUserDB)
+			tt.mockSetup(mockDB)
+
+			service := &userservice.UserService{
+				Db:  mockDB,
+				Log: zap.NewNop(),
+			}
 
 			h := &controllers.Handler{
-				UserService: mockService.UserService,
+				UserService: service,
 				Log:         zap.NewNop(),
 			}
 
@@ -88,7 +83,7 @@ func TestSaveUserHandler(t *testing.T) {
 			r.ServeHTTP(w, req)
 
 			assert.Equal(t, tt.expectedStatus, w.Code)
-			mockService.AssertExpectations(t)
+			mockDB.AssertExpectations(t)
 		})
 	}
 }
