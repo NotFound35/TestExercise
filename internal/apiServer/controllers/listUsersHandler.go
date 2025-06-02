@@ -36,7 +36,7 @@ func (h *Handler) ListUsersHandler(w http.ResponseWriter, r *http.Request) {
 		if age, err := strconv.Atoi(minAgeStr); err == nil {
 			params.MinAge = &age
 		} else {
-			h.log.Error("ошибка преобразования (парсинга) min_age",
+			h.Log.Error("ошибка преобразования (парсинга) min_age",
 				zap.String("op", op),
 				zap.String("value", minAgeStr),
 				zap.Error(err))
@@ -49,7 +49,7 @@ func (h *Handler) ListUsersHandler(w http.ResponseWriter, r *http.Request) {
 		if age, err := strconv.Atoi(maxAgeStr); err == nil {
 			params.MaxAge = &age
 		} else {
-			h.log.Error("ошибка преобразования (парсинга) max_age",
+			h.Log.Error("ошибка преобразования (парсинга) max_age",
 				zap.String("op", op),
 				zap.String("value", maxAgeStr),
 				zap.Error(err))
@@ -62,7 +62,7 @@ func (h *Handler) ListUsersHandler(w http.ResponseWriter, r *http.Request) {
 		if date, err := strconv.ParseInt(startDateStr, 10, 64); err == nil {
 			params.StartDate = &date
 		} else {
-			h.log.Error("ошибка преобразования (парсинга) start_date",
+			h.Log.Error("ошибка преобразования (парсинга) start_date",
 				zap.String("op", op),
 				zap.String("value", startDateStr),
 				zap.Error(err))
@@ -75,7 +75,7 @@ func (h *Handler) ListUsersHandler(w http.ResponseWriter, r *http.Request) {
 		if date, err := strconv.ParseInt(endDateStr, 10, 64); err == nil {
 			params.EndDate = &date
 		} else {
-			h.log.Error("ошибка преобразования (парсинга) end_date",
+			h.Log.Error("ошибка преобразования (парсинга) end_date",
 				zap.String("op", op),
 				zap.String("value", endDateStr),
 				zap.Error(err))
@@ -85,16 +85,16 @@ func (h *Handler) ListUsersHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if err := ValidationListUsers(params); err != nil {
-		h.log.Error("валидация не пройдена", //общий текст ошибки
+		h.Log.Error("валидация не пройдена", //общий текст ошибки
 			zap.String("op", op), //имя текущей операции
 			zap.Error(err))       //ошибка, возвращенная валидатором
 		respondWithError(w, http.StatusBadRequest, err.Error())
 		return
 	}
 
-	users, err := h.userService.UsersList(ctx, params.MinAge, params.MaxAge, params.StartDate, params.EndDate)
+	users, err := h.UserService.UsersList(ctx, params.MinAge, params.MaxAge, params.StartDate, params.EndDate)
 	if err != nil {
-		h.log.Error("ошибка при получении пользователей",
+		h.Log.Error("ошибка при получении пользователей",
 			zap.String("op", op),
 			zap.Error(err))
 		respondWithError(w, http.StatusInternalServerError, "ошибка сервера")

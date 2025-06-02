@@ -8,12 +8,12 @@ import (
 )
 
 type Handler struct {
-	userService *userservice.UserService
-	log         *zap.Logger
+	UserService *userservice.UserService
+	Log         *zap.Logger
 }
 
 func NewHandler(userService *userservice.UserService, log *zap.Logger) *Handler {
-	return &Handler{userService: userService, log: log}
+	return &Handler{UserService: userService, Log: log}
 }
 
 func respondWithJSON(w http.ResponseWriter, code int, payload interface{}) {

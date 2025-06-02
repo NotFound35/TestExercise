@@ -13,13 +13,13 @@ type UserDB interface {
 }
 
 type UserService struct {
-	db  UserDB
+	Db  UserDB
 	Log *zap.Logger
 }
 
 func NewUserService(db UserDB, log *zap.Logger) *UserService {
 	return &UserService{
-		db:  db,
+		Db:  db,
 		Log: log,
 	}
 }

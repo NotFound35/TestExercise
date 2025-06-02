@@ -6,7 +6,7 @@ import (
 
 func (p *PostgreSQL) CreateTables() error {
 	const op = "CreateTables"
-	p.logger.Info("начало миграций")
+	p.Logger.Info("начало миграций")
 	query := `
 	CREATE TABLE IF NOT EXISTS users (
 		id VARCHAR(36) PRIMARY KEY,
@@ -17,13 +17,13 @@ func (p *PostgreSQL) CreateTables() error {
 		created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 	)`
 
-	_, err := p.db.Exec(query)
+	_, err := p.Db.Exec(query)
 	if err != nil {
 		fmt.Errorf("метод %v: %v", op, err)
 		return err
 	}
 
-	p.logger.Info("таблица СОЗДАНА!!!")
+	p.Logger.Info("таблица СОЗДАНА!!!")
 	return nil
 }
 

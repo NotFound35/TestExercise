@@ -22,7 +22,7 @@ func (p *PostgreSQL) ListUsersPostgreSQL(
 			($4::bigint IS NULL OR recording_date <= $4)
 	`
 
-	result, err := p.db.QueryContext(ctx, query, minAge, maxAge, startDate, endDate)
+	result, err := p.Db.QueryContext(ctx, query, minAge, maxAge, startDate, endDate)
 	if err != nil {
 		return nil, fmt.Errorf("op: %s, %w", op, err)
 	}
