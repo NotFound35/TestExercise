@@ -68,6 +68,7 @@ func (s *Server) Middleware(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		defer func() {
 			if err := recover(); err != nil {
+				//todo log / return
 				fmt.Errorf("метод %v: %v", op, err)
 				w.WriteHeader(http.StatusInternalServerError)
 			}

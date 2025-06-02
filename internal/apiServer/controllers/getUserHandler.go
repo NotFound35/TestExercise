@@ -39,7 +39,7 @@ func (h *Handler) GetUserHandler(w http.ResponseWriter, r *http.Request) {
 				zap.String("op", op),
 				zap.String("value", ageStr),
 				zap.Error(err))
-			respondWithError(w, http.StatusBadRequest, "некорректный возраст")
+			responseWithError(w, http.StatusBadRequest, "некорректный возраст")
 			return
 		}
 		params.age = &age
@@ -49,7 +49,7 @@ func (h *Handler) GetUserHandler(w http.ResponseWriter, r *http.Request) {
 		h.Log.Error("валидация не пройдена",
 			zap.String("op", op),
 			zap.Error(err))
-		respondWithError(w, http.StatusBadRequest, err.Error())
+		responseWithError(w, http.StatusBadRequest, err.Error())
 		return
 	}
 
@@ -58,11 +58,11 @@ func (h *Handler) GetUserHandler(w http.ResponseWriter, r *http.Request) {
 		h.Log.Error("ошибка при получении пользователей",
 			zap.String("op", op),
 			zap.Error(err))
-		respondWithError(w, http.StatusInternalServerError, "ошибка сервера")
+		responseWithError(w, http.StatusInternalServerError, "ошибка сервера")
 		return
 	}
 
-	respondWithJSON(w, http.StatusOK, map[string]interface{}{
+	responseWithJson(w, http.StatusOK, map[string]interface{}{
 		"answer": users,
 	})
 }

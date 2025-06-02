@@ -40,7 +40,7 @@ func (h *Handler) ListUsersHandler(w http.ResponseWriter, r *http.Request) {
 				zap.String("op", op),
 				zap.String("value", minAgeStr),
 				zap.Error(err))
-			respondWithError(w, http.StatusBadRequest, "некорректный min_age")
+			responseWithError(w, http.StatusBadRequest, "некорректный min_age")
 			return
 		}
 	}
@@ -53,7 +53,7 @@ func (h *Handler) ListUsersHandler(w http.ResponseWriter, r *http.Request) {
 				zap.String("op", op),
 				zap.String("value", maxAgeStr),
 				zap.Error(err))
-			respondWithError(w, http.StatusBadRequest, "некорректный max_age")
+			responseWithError(w, http.StatusBadRequest, "некорректный max_age")
 			return
 		}
 	}
@@ -66,7 +66,7 @@ func (h *Handler) ListUsersHandler(w http.ResponseWriter, r *http.Request) {
 				zap.String("op", op),
 				zap.String("value", startDateStr),
 				zap.Error(err))
-			respondWithError(w, http.StatusBadRequest, "некорректный start_date")
+			responseWithError(w, http.StatusBadRequest, "некорректный start_date")
 			return
 		}
 	}
@@ -79,7 +79,7 @@ func (h *Handler) ListUsersHandler(w http.ResponseWriter, r *http.Request) {
 				zap.String("op", op),
 				zap.String("value", endDateStr),
 				zap.Error(err))
-			respondWithError(w, http.StatusBadRequest, "некорректный end_date")
+			responseWithError(w, http.StatusBadRequest, "некорректный end_date")
 			return
 		}
 	}
@@ -88,7 +88,7 @@ func (h *Handler) ListUsersHandler(w http.ResponseWriter, r *http.Request) {
 		h.Log.Error("валидация не пройдена", //общий текст ошибки
 			zap.String("op", op), //имя текущей операции
 			zap.Error(err))       //ошибка, возвращенная валидатором
-		respondWithError(w, http.StatusBadRequest, err.Error())
+		responseWithError(w, http.StatusBadRequest, err.Error())
 		return
 	}
 
@@ -97,11 +97,11 @@ func (h *Handler) ListUsersHandler(w http.ResponseWriter, r *http.Request) {
 		h.Log.Error("ошибка при получении пользователей",
 			zap.String("op", op),
 			zap.Error(err))
-		respondWithError(w, http.StatusInternalServerError, "ошибка сервера")
+		responseWithError(w, http.StatusInternalServerError, "ошибка сервера")
 		return
 	}
 
-	respondWithJSON(w, http.StatusOK, ListUsersResponse{
+	responseWithJson(w, http.StatusOK, ListUsersResponse{
 		Users: users,
 	})
 }
