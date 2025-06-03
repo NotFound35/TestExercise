@@ -3,43 +3,24 @@ package usecases_test
 import (
 	"awesomeProject/internal/domain/models"
 	"awesomeProject/internal/userservice"
+	"awesomeProject/tests/mocks"
 	"context"
 	"errors"
-	"testing"
-
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
 	"go.uber.org/zap"
+	"testing"
 )
-
-type MockUserDB struct {
-	mock.Mock
-}
-
-func (m *MockUserDB) SaveUser(ctx context.Context, user *models.User) error {
-	args := m.Called(ctx, user)
-	return args.Error(0)
-}
-
-func (m *MockUserDB) GetUserPostgreSQL(ctx context.Context, firstName, lastName string, age int) ([]models.User, error) {
-	args := m.Called(ctx, firstName, lastName, age)
-	return args.Get(0).([]models.User), args.Error(1)
-}
-
-func (m *MockUserDB) ListUsersPostgreSQL(ctx context.Context, minAge, maxAge *int, startDate, endDate *int64) ([]models.User, error) {
-	args := m.Called(ctx, minAge, maxAge, startDate, endDate)
-	return args.Get(0).([]models.User), args.Error(1)
-}
 
 func TestUserService_Save(t *testing.T) {
 	tests := []struct {
 		name        string
-		mockSetup   func(*MockUserDB)
+		mockSetup   func(*mocks.UserDB)
 		expectedErr error
 	}{
 		{
 			name: "success",
-			mockSetup: func(m *MockUserDB) {
+			mockSetup: func(m *mocks.UserDB) {
 				m.On("SaveUser", mock.Anything, &models.User{
 					FirstName: "Test",
 					LastName:  "Test",
@@ -50,7 +31,7 @@ func TestUserService_Save(t *testing.T) {
 		},
 		{
 			name: "db error",
-			mockSetup: func(m *MockUserDB) {
+			mockSetup: func(m *mocks.UserDB) {
 				m.On("SaveUser", mock.Anything, mock.Anything).
 					Return(errors.New("db error"))
 			},
@@ -60,7 +41,7 @@ func TestUserService_Save(t *testing.T) {
 
 	for _, tt := range tests {
 		t.Run(tt.name, func(t *testing.T) {
-			mockDB := new(MockUserDB)
+			mockDB := new(mocks.UserDB)
 			tt.mockSetup(mockDB)
 
 			service := &userservice.UserService{

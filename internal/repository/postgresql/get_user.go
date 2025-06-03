@@ -9,7 +9,6 @@ import (
 func (p *PostgreSQL) GetUserPostgreSQL(ctx context.Context, firstName, lastName string, age int) ([]models.User, error) {
 	const op = "GetUserPostgreSQL"
 
-	//инициализация базового запроса и переменных
 	query := "SELECT id, first_name, last_name, age FROM users WHERE 1=1"
 	var search []interface{}
 	var answer []models.User

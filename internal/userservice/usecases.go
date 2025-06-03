@@ -4,17 +4,12 @@ import (
 	"awesomeProject/internal/domain/models"
 	"context"
 	"fmt"
-	"go.uber.org/zap"
 )
 
 func (u *UserService) UserSave(ctx context.Context, user *models.User) error {
 	const op = "SaveUser"
 
-	err := u.Db.SaveUser(ctx, user)
-	if err != nil {
-		u.Log.Error("ошибка сохранения юзера",
-			zap.String("op", op),
-			zap.Error(err))
+	if err := u.Db.SaveUser(ctx, user); err != nil {
 		return fmt.Errorf("метод: %s: %w", op, err)
 	}
 	return nil

@@ -19,8 +19,8 @@ func (p *PostgreSQL) CreateTables() error {
 
 	_, err := p.Db.Exec(query)
 	if err != nil {
-		fmt.Errorf("метод %v: %v", op, err)
-		return err
+		return fmt.Errorf("метод %v: %v", op, err)
+
 	}
 
 	p.Logger.Info("таблица СОЗДАНА!!!")
