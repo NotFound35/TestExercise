@@ -25,6 +25,5 @@ func (p *PostgreSQL) SaveUser(ctx context.Context, user *models.User) error {
 		return fmt.Errorf("op: %v, error: %v", op, err)
 	}
 
-	p.Logger.Info("юзер сохранен - УСПЕХ!!!")
 	return nil
 }

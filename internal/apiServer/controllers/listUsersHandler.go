@@ -85,10 +85,11 @@ func (h *Handler) ListUsersHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	if err := ValidationListUsers(params); err != nil {
-		h.Log.Error("валидация не пройдена", //общий текст ошибки
-			zap.String("op", op), //имя текущей операции
-			zap.Error(err))       //ошибка, возвращенная валидатором
-		responseWithError(w, http.StatusBadRequest, err.Error())
+		h.Log.Error("валидация не пройдена",
+			zap.String("op", op),
+			zap.Error(err))
+		respondWithError(w, http.StatusBadRequest, err.Error())
+
 		return
 	}
 

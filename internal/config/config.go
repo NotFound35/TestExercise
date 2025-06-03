@@ -21,6 +21,7 @@ func MustLoad() *Config {
 	if _, err := os.Stat(configPath); os.IsNotExist(err) {
 		//todo log / return
 		fmt.Errorf("функция %v: %v", op, err)
+		return nil
 	}
 
 	var cfg Config

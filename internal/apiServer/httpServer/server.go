@@ -20,7 +20,6 @@ type Server struct {
 	handlers *controllers.Handler
 }
 
-// init server
 func NewServer(u *userservice.UserService, log *zap.Logger) *Server {
 	server := &Server{
 		router:   chi.NewRouter(),
@@ -71,6 +70,7 @@ func (s *Server) Middleware(next http.Handler) http.Handler {
 				//todo log / return
 				fmt.Errorf("метод %v: %v", op, err)
 				w.WriteHeader(http.StatusInternalServerError)
+				return
 			}
 		}()
 		next.ServeHTTP(w, r)
