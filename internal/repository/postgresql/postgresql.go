@@ -43,6 +43,7 @@ func NewPostgreSQL(cfg *config.Config, logger *zap.Logger) (*PostgreSQL, error) 
 func (p *PostgreSQL) Close() error {
 	const op = "Close"
 	if err := p.Db.Close(); err != nil {
+		//todo log
 		fmt.Errorf("метод %v: %v", op, err)
 		return err
 	}

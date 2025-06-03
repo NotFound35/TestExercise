@@ -31,21 +31,21 @@ func (p *PostgreSQL) GetUserPostgreSQL(ctx context.Context, firstName, lastName 
 		search = append(search, age)
 	}
 
-	result, err := p.Db.QueryContext(ctx, query, search...)
+	rows, err := p.Db.QueryContext(ctx, query, search...)
 	if err != nil {
 		return nil, fmt.Errorf("op: %s, %w", op, err)
 	}
-	defer result.Close()
+	defer rows.Close()
 
-	for result.Next() {
+	for rows.Next() {
 		var user models.User
-		if err := result.Scan(&user.ID, &user.FirstName, &user.LastName, &user.Age); err != nil {
+		if err := rows.Scan(&user.ID, &user.FirstName, &user.LastName, &user.Age); err != nil {
 			return nil, fmt.Errorf("op: %s, %w", op, err)
 		}
 		answer = append(answer, user)
 	}
 
-	if err := result.Err(); err != nil {
+	if err := rows.Err(); err != nil {
 		return nil, fmt.Errorf("op: %s, %w", op, err)
 	}
 

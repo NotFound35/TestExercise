@@ -20,7 +20,6 @@ func (p *PostgreSQL) CreateTables() error {
 	_, err := p.Db.Exec(query)
 	if err != nil {
 		return fmt.Errorf("метод %v: %v", op, err)
-
 	}
 
 	p.Logger.Info("таблица СОЗДАНА!!!")

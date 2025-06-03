@@ -22,16 +22,16 @@ func (p *PostgreSQL) ListUsersPostgreSQL(
 			($4::bigint IS NULL OR recording_date <= $4)
 	`
 
-	result, err := p.Db.QueryContext(ctx, query, minAge, maxAge, startDate, endDate)
+	rows, err := p.Db.QueryContext(ctx, query, minAge, maxAge, startDate, endDate)
 	if err != nil {
 		return nil, fmt.Errorf("op: %s, %w", op, err)
 	}
-	defer result.Close()
+	defer rows.Close()
 
 	var users []models.User
-	for result.Next() {
+	for rows.Next() {
 		var user models.User
-		err := result.Scan(
+		err := rows.Scan(
 			&user.ID,
 			&user.FirstName,
 			&user.LastName,
