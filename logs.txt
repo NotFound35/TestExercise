@@ -1,0 +1,61 @@
+2025-05-16T22:02:42.409+0300	DEBUG	my_project/main_test.go:24	Это debug сообщение
+2025-05-16T22:02:42.435+0300	INFO	my_project/main_test.go:25	Это info сообщение
+2025-05-16T22:02:42.436+0300	WARN	my_project/main_test.go:26	Это warning сообщение
+2025-05-16T22:02:42.436+0300	ERROR	my_project/main_test.go:27	Это error сообщение	{"дополнительное": "поле"}
+2025-05-16T22:31:56.880+0300	INFO	postgresql/postgresql.go:38	успешный коннект с PostgreSQL
+2025-05-16T22:32:03.219+0300	INFO	postgresql/create_user.go:24	юзер сохранен - УСПЕХ!!!
+2025-05-16T22:36:48.145+0300	INFO	postgresql/postgresql.go:49	соединения с БД закрыто - УСПЕХ!!!
+2025-05-18T18:17:21.848+0300	INFO	postgresql/postgresql.go:38	успешный коннект с PostgreSQL
+2025-05-18T18:18:33.602+0300	INFO	postgresql/create_user.go:24	юзер сохранен - УСПЕХ!!!
+2025-05-18T18:20:00.370+0300	INFO	postgresql/postgresql.go:49	соединения с БД закрыто - УСПЕХ!!!
+2025-05-18T20:50:09.540+0300	INFO	postgresql/postgresql.go:38	успешный коннект с PostgreSQL
+2025-05-18T21:15:54.159+0300	INFO	postgresql/postgresql.go:49	соединения с БД закрыто - УСПЕХ!!!
+2025-05-18T21:15:58.061+0300	INFO	postgresql/postgresql.go:38	успешный коннект с PostgreSQL
+2025-05-18T21:16:36.403+0300	INFO	postgresql/create_user.go:24	юзер сохранен - УСПЕХ!!!
+2025-05-18T21:17:37.123+0300	INFO	postgresql/postgresql.go:49	соединения с БД закрыто - УСПЕХ!!!
+2025-05-18T21:17:38.668+0300	INFO	postgresql/postgresql.go:38	успешный коннект с PostgreSQL
+2025-05-18T21:37:44.841+0300	INFO	postgresql/postgresql.go:49	соединения с БД закрыто - УСПЕХ!!!
+2025-05-20T22:01:15.494+0300	INFO	postgresql/postgresql.go:38	успешный коннект с PostgreSQL
+2025-05-20T22:01:28.636+0300	ERROR	controller/saveUserHandler.go:39	валидация не пройдена	{"op": "Handler.SaveUserHandler", "error": "имя своё назови"}
+2025-05-20T22:01:28.647+0300	ERROR	controller/saveUserHandler.go:54	юзер не сохранен	{"op": "Handler.SaveUserHandler", "error": "op: SaveUser, ошибка сохранения юзера op: CreateUser.SaveUser, error: pq: invalid input syntax for type bigint: \"2025-05-20 22:01:28.6360045+03:00\""}
+2025-05-20T22:02:16.532+0300	ERROR	controller/saveUserHandler.go:39	валидация не пройдена	{"op": "Handler.SaveUserHandler", "error": "слишком старый"}
+2025-05-20T22:02:16.534+0300	ERROR	controller/saveUserHandler.go:54	юзер не сохранен	{"op": "Handler.SaveUserHandler", "error": "op: SaveUser, ошибка сохранения юзера op: CreateUser.SaveUser, error: pq: invalid input syntax for type bigint: \"2025-05-20 22:02:16.5324717+03:00\""}
+2025-05-20T22:03:41.822+0300	INFO	postgresql/postgresql.go:49	соединения с БД закрыто - УСПЕХ!!!
+2025-05-20T22:30:34.208+0300	INFO	postgresql/postgresql.go:38	успешный коннект с PostgreSQL
+2025-05-20T22:30:37.010+0300	ERROR	controller/saveUserHandler.go:40	валидация не пройдена	{"op": "Handler.SaveUserHandler", "error": "слишком старый"}
+2025-05-20T22:39:20.974+0300	INFO	postgresql/postgresql.go:49	соединения с БД закрыто - УСПЕХ!!!
+2025-05-21T22:36:13.608+0300	INFO	postgresql/postgresql.go:38	успешный коннект с PostgreSQL
+2025-05-21T22:47:43.003+0300	INFO	postgresql/postgresql.go:49	соединения с БД закрыто - УСПЕХ!!!
+2025-05-21T22:51:46.963+0300	INFO	postgresql/postgresql.go:38	успешный коннект с PostgreSQL
+2025-05-21T22:59:04.103+0300	INFO	controller/getUserHandler.go:24	начало обработки запроса	{"op": "Handler.GetUserHandler"}
+2025-05-21T22:59:04.143+0300	INFO	userservice/usecases.go:43	результаты поиска	{"op": "UserService.UserGet", "count": 1}
+2025-05-21T22:59:34.190+0300	INFO	controller/getUserHandler.go:24	начало обработки запроса	{"op": "Handler.GetUserHandler"}
+2025-05-21T22:59:34.192+0300	INFO	userservice/usecases.go:43	результаты поиска	{"op": "UserService.UserGet", "count": 0}
+2025-05-21T22:59:46.823+0300	INFO	controller/getUserHandler.go:24	начало обработки запроса	{"op": "Handler.GetUserHandler"}
+2025-05-21T22:59:46.829+0300	INFO	userservice/usecases.go:43	результаты поиска	{"op": "UserService.UserGet", "count": 2}
+2025-05-21T22:59:58.753+0300	INFO	controller/getUserHandler.go:24	начало обработки запроса	{"op": "Handler.GetUserHandler"}
+2025-05-21T22:59:58.755+0300	INFO	userservice/usecases.go:43	результаты поиска	{"op": "UserService.UserGet", "count": 18}
+2025-05-21T23:00:09.587+0300	INFO	controller/getUserHandler.go:24	начало обработки запроса	{"op": "Handler.GetUserHandler"}
+2025-05-21T23:00:09.588+0300	INFO	userservice/usecases.go:43	результаты поиска	{"op": "UserService.UserGet", "count": 2}
+2025-05-21T23:00:13.328+0300	INFO	controller/getUserHandler.go:24	начало обработки запроса	{"op": "Handler.GetUserHandler"}
+2025-05-21T23:00:13.331+0300	INFO	userservice/usecases.go:43	результаты поиска	{"op": "UserService.UserGet", "count": 2}
+2025-05-21T23:00:39.759+0300	INFO	postgresql/postgresql.go:49	соединения с БД закрыто - УСПЕХ!!!
+2025-05-21T23:05:30.011+0300	INFO	postgresql/postgresql.go:38	успешный коннект с PostgreSQL
+2025-05-21T23:06:19.028+0300	INFO	postgresql/postgresql.go:49	соединения с БД закрыто - УСПЕХ!!!
+2025-05-23T00:06:42.216+0300	INFO	postgresql/postgresql.go:38	успешный коннект с PostgreSQL
+2025-05-23T00:07:37.159+0300	INFO	postgresql/postgresql.go:49	соединения с БД закрыто - УСПЕХ!!!
+2025-05-23T00:22:30.976+0300	INFO	postgresql/postgresql.go:38	успешный коннект с PostgreSQL
+2025-05-23T00:23:08.031+0300	INFO	postgresql/postgresql.go:49	соединения с БД закрыто - УСПЕХ!!!
+2025-05-28T22:30:06.374+0300	INFO	postgresql/postgresql.go:38	успешный коннект с PostgreSQL
+2025-05-28T22:36:43.163+0300	ERROR	userservice/usecases.go:15	ошибка сохранения юзера	{"op": "SaveUser", "error": "op: CreateUser.SaveUser, error: pq: invalid input syntax for type bigint: \"2025-05-28 22:36:43.1377012+03:00\""}
+2025-05-28T22:36:43.163+0300	ERROR	controllers/saveUserHandler.go:61	юзер не сохранен	{"op": "Handler.SaveUserHandler", "error": "метод: SaveUser: op: CreateUser.SaveUser, error: pq: invalid input syntax for type bigint: \"2025-05-28 22:36:43.1377012+03:00\""}
+2025-05-28T22:38:15.708+0300	ERROR	userservice/usecases.go:15	ошибка сохранения юзера	{"op": "SaveUser", "error": "op: CreateUser.SaveUser, error: pq: invalid input syntax for type bigint: \"2025-05-28 22:38:15.7056107+03:00\""}
+2025-05-28T22:38:15.708+0300	ERROR	controllers/saveUserHandler.go:61	юзер не сохранен	{"op": "Handler.SaveUserHandler", "error": "метод: SaveUser: op: CreateUser.SaveUser, error: pq: invalid input syntax for type bigint: \"2025-05-28 22:38:15.7056107+03:00\""}
+2025-05-28T22:38:46.792+0300	ERROR	userservice/usecases.go:15	ошибка сохранения юзера	{"op": "SaveUser", "error": "op: CreateUser.SaveUser, error: pq: invalid input syntax for type bigint: \"2025-05-28 22:38:46.7889754+03:00\""}
+2025-05-28T22:38:46.792+0300	ERROR	controllers/saveUserHandler.go:61	юзер не сохранен	{"op": "Handler.SaveUserHandler", "error": "метод: SaveUser: op: CreateUser.SaveUser, error: pq: invalid input syntax for type bigint: \"2025-05-28 22:38:46.7889754+03:00\""}
+2025-05-28T22:44:42.758+0300	INFO	postgresql/postgresql.go:49	соединения с БД закрыто - УСПЕХ!!!
+2025-05-28T22:48:58.774+0300	INFO	postgresql/postgresql.go:38	успешный коннект с PostgreSQL
+2025-05-28T22:49:02.020+0300	INFO	postgresql/create_user.go:28	юзер сохранен - УСПЕХ!!!
+2025-05-28T23:09:24.594+0300	INFO	postgresql/postgresql.go:49	соединения с БД закрыто - УСПЕХ!!!
+2025-05-29T23:57:21.125+0300	INFO	postgresql/postgresql.go:38	успешный коннект с PostgreSQL
+2025-05-30T00:09:59.734+0300	INFO	postgresql/postgresql.go:49	соединения с БД закрыто - УСПЕХ!!!
