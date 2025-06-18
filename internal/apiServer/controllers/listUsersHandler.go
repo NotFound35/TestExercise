@@ -4,11 +4,12 @@ import (
 	"awesomeProject/internal/domain/models"
 	"context"
 	"fmt"
-	"go.uber.org/zap"
 	"net/http"
 	"strconv"
 	"strings"
 	"time"
+
+	"go.uber.org/zap"
 )
 
 type ListUsersResponse struct {
@@ -88,12 +89,12 @@ func (h *Handler) ListUsersHandler(w http.ResponseWriter, r *http.Request) {
 		h.Log.Error("валидация не пройдена",
 			zap.String("op", op),
 			zap.Error(err))
-		respondWithError(w, http.StatusBadRequest, err.Error())
+		responseWithError(w, http.StatusBadRequest, err.Error())
 
 		return
 	}
 
-	users, err := h.UserService.UsersList(ctx, params.MinAge, params.MaxAge, params.StartDate, params.EndDate)
+	users, err := h.UserService.ListUsers(ctx, params.MinAge, params.MaxAge, params.StartDate, params.EndDate)
 	if err != nil {
 		h.Log.Error("ошибка при получении пользователей",
 			zap.String("op", op),

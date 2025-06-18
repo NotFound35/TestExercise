@@ -6,12 +6,12 @@ import (
 	"awesomeProject/tests/mocks"
 	"context"
 	"errors"
+	"testing"
+
 	"github.com/stretchr/testify/assert"
 	"github.com/stretchr/testify/mock"
 	"go.uber.org/zap"
-	"testing"
 )
-
 
 func TestUserService_Save(t *testing.T) {
 	tests := []struct {
@@ -50,7 +50,7 @@ func TestUserService_Save(t *testing.T) {
 				Log: zap.NewNop(),
 			}
 
-			err := service.UserSave(context.Background(), &models.User{
+			err := service.SaveUser(context.Background(), &models.User{
 				FirstName: "Test",
 				LastName:  "Test",
 				Age:       50,

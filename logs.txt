@@ -59,3 +59,28 @@
 2025-05-28T23:09:24.594+0300	INFO	postgresql/postgresql.go:49	соединения с БД закрыто - УСПЕХ!!!
 2025-05-29T23:57:21.125+0300	INFO	postgresql/postgresql.go:38	успешный коннект с PostgreSQL
 2025-05-30T00:09:59.734+0300	INFO	postgresql/postgresql.go:49	соединения с БД закрыто - УСПЕХ!!!
+2025-06-18T00:19:05.802+0400	ERROR	controllers/saveUserHandler.go:45	валидация не пройдена	{"op": "Handler.SaveUserHandler", "error": "имя своё назови\nа фамилию?\nты чё, не родился еще?"}
+2025-06-18T00:19:47.442+0400	ERROR	controllers/saveUserHandler.go:45	валидация не пройдена	{"op": "Handler.SaveUserHandler", "error": "имя своё назови\nа фамилию?\nты чё, не родился еще?"}
+2025-06-18T00:21:31.517+0400	ERROR	controllers/saveUserHandler.go:45	валидация не пройдена	{"op": "Handler.SaveUserHandler", "error": "имя своё назови\nа фамилию?\nты чё, не родился еще?"}
+2025-06-18T00:26:55.589+0400	ERROR	controllers/saveUserHandler.go:45	валидация не пройдена	{"op": "Handler.SaveUserHandler", "error": "имя своё назови\nа фамилию?\nты чё, не родился еще?"}
+2025-06-18T00:27:04.748+0400	ERROR	controllers/saveUserHandler.go:45	валидация не пройдена	{"op": "Handler.SaveUserHandler", "error": "имя своё назови\nа фамилию?\nты чё, не родился еще?"}
+2025-06-18T00:27:16.995+0400	ERROR	controllers/saveUserHandler.go:45	валидация не пройдена	{"op": "Handler.SaveUserHandler", "error": "имя своё назови\nа фамилию?\nты чё, не родился еще?"}
+2025-06-18T00:27:33.637+0400	ERROR	controllers/saveUserHandler.go:45	валидация не пройдена	{"op": "Handler.SaveUserHandler", "error": "имя своё назови\nа фамилию?\nты чё, не родился еще?"}
+2025-06-18T00:53:50.394+0400	INFO	postgresql/postgresql.go:47	успешный коннект с PostgreSQL
+2025-06-18T00:54:01.142+0400	ERROR	controllers/saveUserHandler.go:61	юзер не сохранен	{"op": "Handler.SaveUserHandler", "error": "метод: SaveUser: op: CreateUser.SaveUser, error: pq: relation \"users\" does not exist"}
+2025-06-18T00:55:20.362+0400	INFO	postgresql/postgresql.go:61	соединения с БД закрыто - УСПЕХ!!!
+2025-06-18T00:55:22.082+0400	INFO	postgresql/postgresql.go:47	успешный коннект с PostgreSQL
+2025-06-18T00:55:43.769+0400	ERROR	controllers/saveUserHandler.go:61	юзер не сохранен	{"op": "Handler.SaveUserHandler", "error": "метод: SaveUser: op: CreateUser.SaveUser, error: pq: relation \"users\" does not exist"}
+2025-06-18T01:00:40.362+0400	INFO	postgresql/postgresql.go:62	соединения с БД закрыто - УСПЕХ!!!
+2025-06-18T01:00:42.280+0400	INFO	postgresql/postgresql.go:47	успешный коннект с PostgreSQL
+2025-06-18T01:00:42.281+0400	INFO	postgresql/migrations.go:9	начало миграций
+2025-06-18T01:00:42.303+0400	INFO	postgresql/migrations.go:25	таблица СОЗДАНА!!!
+2025-06-18T01:05:16.296+0400	INFO	postgresql/postgresql.go:62	соединения с БД закрыто - УСПЕХ!!!
+2025-06-18T01:05:18.264+0400	INFO	postgresql/postgresql.go:47	успешный коннект с PostgreSQL
+2025-06-18T01:05:18.264+0400	INFO	postgresql/migrations.go:9	начало миграций
+2025-06-18T01:05:18.265+0400	INFO	postgresql/migrations.go:25	таблица СОЗДАНА!!!
+2025-06-18T01:05:45.150+0400	INFO	postgresql/postgresql.go:62	соединения с БД закрыто - УСПЕХ!!!
+2025-06-18T01:06:07.413+0400	INFO	postgresql/postgresql.go:47	успешный коннект с PostgreSQL
+2025-06-18T01:06:07.414+0400	INFO	postgresql/migrations.go:9	начало миграций
+2025-06-18T01:06:07.415+0400	INFO	postgresql/migrations.go:25	таблица СОЗДАНА!!!
+2025-06-18T01:06:19.807+0400	INFO	userservice/usecases.go:15	User created

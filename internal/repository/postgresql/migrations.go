@@ -26,6 +26,7 @@ func (p *PostgreSQL) CreateTables() error {
 	return nil
 }
 
-func Migrate(db *PostgreSQL) func() error {
-	return db.CreateTables
+func Migrate(db *PostgreSQL) {
+	fmt.Println("migrations success")
+	db.CreateTables()
 }
