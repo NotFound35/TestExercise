@@ -3,16 +3,17 @@ package controllers
 import (
 	"awesomeProject/internal/userservice"
 	"encoding/json"
-	"go.uber.org/zap"
 	"net/http"
+
+	"go.uber.org/zap"
 )
 
 type Handler struct {
-	UserService *userservice.UserService
+	UserService userservice.IUserService
 	Log         *zap.Logger
 }
 
-func NewHandler(userService *userservice.UserService, log *zap.Logger) *Handler {
+func NewHandler(userService userservice.IUserService, log *zap.Logger) *Handler {
 	return &Handler{UserService: userService, Log: log}
 }
 

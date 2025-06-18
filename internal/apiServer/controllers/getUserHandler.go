@@ -4,11 +4,12 @@ import (
 	"awesomeProject/internal/domain/models"
 	"context"
 	"fmt"
-	"go.uber.org/zap"
 	"net/http"
 	"strconv"
 	"strings"
 	"time"
+
+	"go.uber.org/zap"
 )
 
 type GetUserResponse struct {
@@ -53,7 +54,7 @@ func (h *Handler) GetUserHandler(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	users, err := h.UserService.UserGet(ctx, params.firstName, params.lastName, *params.age)
+	users, err := h.UserService.GetUser(ctx, params.firstName, params.lastName, *params.age)
 	if err != nil {
 		h.Log.Error("ошибка при получении пользователей",
 			zap.String("op", op),

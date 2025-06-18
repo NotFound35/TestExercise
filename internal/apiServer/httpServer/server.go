@@ -7,12 +7,13 @@ import (
 	"context"
 	"errors"
 	"fmt"
-	"github.com/go-chi/chi/v5"
-	"go.uber.org/zap"
 	"net/http"
 	"os"
 	"os/signal"
 	"time"
+
+	"github.com/go-chi/chi/v5"
+	"go.uber.org/zap"
 )
 
 type Server struct {
@@ -20,7 +21,7 @@ type Server struct {
 	handlers *controllers.Handler
 }
 
-func NewServer(u *userservice.UserService, log *zap.Logger) *Server {
+func NewServer(u userservice.IUserService, log *zap.Logger) *Server {
 	server := &Server{
 		router:   chi.NewRouter(),
 		handlers: controllers.NewHandler(u, log),
@@ -89,4 +90,7 @@ func (s *Server) setupRoutes() {
 	s.router.Post("/users", s.handlers.SaveUserHandler)
 	s.router.Get("/users/search", s.handlers.GetUserHandler)
 	s.router.Get("/users/list", s.handlers.ListUsersHandler)
+	//s.router.Delete("/users/delete/soft", s.handlers.SoftDeleteUserHandler)
+	//s.router.Delete("/users/delete/hard", s.handlers.HardDeleteUserHandler)
+
 }

@@ -5,10 +5,11 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"go.uber.org/zap"
 	"net/http"
 	"strings"
 	"time"
+
+	"go.uber.org/zap"
 )
 
 type Request struct {
@@ -55,10 +56,8 @@ func (h *Handler) SaveUserHandler(w http.ResponseWriter, r *http.Request) {
 		Age:       req.User.Age,
 	}
 
-	err := h.UserService.UserSave(ctx, user)
+	err := h.UserService.SaveUser(ctx, user)
 	if err != nil {
-		//todo логгирование 2, при ошибке одна и та же ошибка залогируется дважды
-		// надо убрать логгирование на нижнем слое, избыточный лог
 		h.Log.Error("юзер не сохранен",
 			zap.String("op", op),
 			zap.Error(err),
