@@ -65,3 +65,30 @@ func (h *Handler) DeleteUserHandler(w http.ResponseWriter, r *http.Request) {
 	})
 
 }
+
+func (h *Handler) SoftDeleteUserHandler(w http.ResponseWriter, r *http.Request) {
+	const op = "Handler.SoftDeleteUserHandler"
+	ctx, cancel := context.WithTimeout(r.Context(), 10*time.Second)
+	defer cancel()
+
+	idStr := chi.URLParam(r, "id")
+	if idStr == "" {
+		h.Log.Error("missing user id in URL", zap.String("op", op))
+	}
+	userID, err := uuid.Parse(idStr)
+	if err != nil {
+		h.Log.Error("Ivalid user id format", zap.String("op", op))
+	}
+	user := &models.User{
+		ID: userID,
+	}
+
+	if err := h.UserService.SoftUserDelete(ctx, user); err != nil {
+		h.Log.Error("Soft delete error", zap.String("op", op), zap.Error(err))
+		responseWithError(w, http.StatusInternalServerError, "soft delete error")
+		return
+	}
+	responseWithJson(w, http.StatusOK, DeleteResponse{
+		Message: "User soft deleted",
+	})
+}

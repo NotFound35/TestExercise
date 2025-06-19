@@ -93,3 +93,87 @@
 2025-06-19T05:22:19.645+0400	INFO	userservice/usecases.go:37	User deleted
 2025-06-19T05:22:19.646+0400	INFO	controllers/deleteUserHandler.go:62	User deleted
 2025-06-19T05:22:28.191+0400	ERROR	controllers/deleteUserHandler.go:42	ошибка преобразования (парсинга) id	{"op": "Handler.DeleteUserHandler", "value": "list", "error": "invalid UUID length: 4"}
+2025-06-19T05:27:47.096+0400	INFO	postgresql/postgresql.go:68	соединения с БД закрыто - УСПЕХ!!!
+2025-06-19T06:46:05.905+0400	INFO	postgresql/postgresql.go:54	успешный коннект с PostgreSQL
+2025-06-19T06:46:05.905+0400	INFO	postgresql/migrations.go:9	начало миграций
+2025-06-19T06:46:39.399+0400	INFO	userservice/usecases.go:15	User created
+2025-06-19T06:46:48.630+0400	INFO	userservice/usecases.go:15	User created
+2025-06-19T06:46:55.255+0400	INFO	userservice/usecases.go:15	User created
+2025-06-19T06:47:43.655+0400	INFO	userservice/usecases.go:46	User soft-deleted
+2025-06-19T06:47:55.634+0400	ERROR	controllers/deleteUserHandler.go:42	ошибка преобразования (парсинга) id	{"op": "Handler.DeleteUserHandler", "value": "list", "error": "invalid UUID length: 4"}
+2025-06-19T06:48:44.031+0400	INFO	postgresql/postgresql.go:69	соединения с БД закрыто - УСПЕХ!!!
+2025-06-19T06:48:52.663+0400	INFO	postgresql/postgresql.go:54	успешный коннект с PostgreSQL
+2025-06-19T06:48:52.663+0400	INFO	postgresql/migrations.go:9	начало миграций
+2025-06-19T06:49:23.546+0400	INFO	userservice/usecases.go:46	User soft-deleted
+2025-06-19T06:50:04.654+0400	INFO	userservice/usecases.go:46	User soft-deleted
+2025-06-19T06:52:48.397+0400	INFO	postgresql/postgresql.go:69	соединения с БД закрыто - УСПЕХ!!!
+2025-06-19T06:53:48.868+0400	INFO	postgresql/postgresql.go:54	успешный коннект с PostgreSQL
+2025-06-19T06:53:48.868+0400	INFO	postgresql/migrations.go:9	начало миграций
+2025-06-19T06:54:15.606+0400	INFO	userservice/usecases.go:46	User soft-deleted
+2025-06-19T07:00:27.728+0400	INFO	postgresql/postgresql.go:69	соединения с БД закрыто - УСПЕХ!!!
+2025-06-19T07:05:22.309+0400	INFO	postgresql/postgresql.go:54	успешный коннект с PostgreSQL
+2025-06-19T07:05:22.309+0400	INFO	postgresql/migrations.go:9	начало миграций
+2025-06-19T07:05:44.300+0400	ERROR	controllers/deleteUserHandler.go:87	Soft delete error	{"op": "Handler.SoftDeleteUserHandler", "error": "<UNK>: SoftDeleteUser.SoftUserDelete: op: SoftDeleteUser.SoftDeleteUser, error: sql: converting argument $1 type: unsupported type models.User, a struct"}
+2025-06-19T07:06:28.060+0400	ERROR	controllers/deleteUserHandler.go:87	Soft delete error	{"op": "Handler.SoftDeleteUserHandler", "error": "<UNK>: SoftDeleteUser.SoftUserDelete: op: SoftDeleteUser.SoftDeleteUser, error: sql: converting argument $1 type: unsupported type models.User, a struct"}
+2025-06-19T07:06:52.532+0400	ERROR	controllers/deleteUserHandler.go:87	Soft delete error	{"op": "Handler.SoftDeleteUserHandler", "error": "<UNK>: SoftDeleteUser.SoftUserDelete: op: SoftDeleteUser.SoftDeleteUser, error: sql: converting argument $1 type: unsupported type models.User, a struct"}
+2025-06-19T07:10:00.186+0400	INFO	postgresql/postgresql.go:69	соединения с БД закрыто - УСПЕХ!!!
+2025-06-19T07:10:02.894+0400	INFO	postgresql/postgresql.go:54	успешный коннект с PostgreSQL
+2025-06-19T07:10:02.894+0400	INFO	postgresql/migrations.go:9	начало миграций
+2025-06-19T07:10:02.895+0400	INFO	postgresql/migrations.go:26	таблица СОЗДАНА!!!
+2025-06-19T07:10:14.357+0400	ERROR	controllers/deleteUserHandler.go:87	Soft delete error	{"op": "Handler.SoftDeleteUserHandler", "error": "<UNK>: SoftDeleteUser.SoftUserDelete: op: SoftDeleteUser.SoftDeleteUser, error: sql: converting argument $1 type: unsupported type models.User, a struct"}
+2025-06-19T07:11:06.137+0400	ERROR	controllers/deleteUserHandler.go:87	Soft delete error	{"op": "Handler.SoftDeleteUserHandler", "error": "<UNK>: SoftDeleteUser.SoftUserDelete: op: SoftDeleteUser.SoftDeleteUser, error: sql: converting argument $1 type: unsupported type models.User, a struct"}
+2025-06-19T07:12:58.277+0400	INFO	postgresql/postgresql.go:69	соединения с БД закрыто - УСПЕХ!!!
+2025-06-19T07:13:05.694+0400	INFO	postgresql/postgresql.go:54	успешный коннект с PostgreSQL
+2025-06-19T07:13:05.694+0400	INFO	postgresql/migrations.go:9	начало миграций
+2025-06-19T07:13:05.696+0400	INFO	postgresql/migrations.go:26	таблица СОЗДАНА!!!
+2025-06-19T07:13:13.495+0400	ERROR	controllers/deleteUserHandler.go:87	Soft delete error	{"op": "Handler.SoftDeleteUserHandler", "error": "<UNK>: SoftDeleteUser.SoftUserDelete: op: SoftDeleteUser.SoftDeleteUser, error: pq: column \"is_deleted\" of relation \"users\" does not exist"}
+2025-06-19T07:19:13.969+0400	INFO	postgresql/postgresql.go:69	соединения с БД закрыто - УСПЕХ!!!
+2025-06-19T07:19:16.803+0400	INFO	postgresql/postgresql.go:54	успешный коннект с PostgreSQL
+2025-06-19T07:19:16.803+0400	INFO	postgresql/migrations.go:9	начало миграций
+2025-06-19T07:19:16.804+0400	INFO	postgresql/migrations.go:26	таблица СОЗДАНА!!!
+2025-06-19T07:19:24.726+0400	ERROR	controllers/deleteUserHandler.go:87	Soft delete error	{"op": "Handler.SoftDeleteUserHandler", "error": "<UNK>: SoftDeleteUser.SoftUserDelete: op: SoftDeleteUser.SoftDeleteUser, error: pq: column \"is_deleted\" of relation \"users\" does not exist"}
+2025-06-19T07:25:02.417+0400	INFO	postgresql/postgresql.go:69	соединения с БД закрыто - УСПЕХ!!!
+2025-06-19T07:29:19.261+0400	INFO	postgresql/postgresql.go:54	успешный коннект с PostgreSQL
+2025-06-19T07:29:19.261+0400	INFO	postgresql/migrations.go:9	начало миграций
+2025-06-19T07:29:19.262+0400	INFO	postgresql/migrations.go:26	таблица СОЗДАНА!!!
+2025-06-19T07:29:30.657+0400	ERROR	controllers/deleteUserHandler.go:87	Soft delete error	{"op": "Handler.SoftDeleteUserHandler", "error": "<UNK>: SoftDeleteUser.SoftUserDelete: op: SoftDeleteUser.SoftDeleteUser, error: pq: column \"is_deleted\" of relation \"users\" does not exist"}
+2025-06-19T07:32:15.876+0400	INFO	postgresql/postgresql.go:69	соединения с БД закрыто - УСПЕХ!!!
+2025-06-19T07:32:22.110+0400	INFO	postgresql/postgresql.go:54	успешный коннект с PostgreSQL
+2025-06-19T07:32:22.110+0400	INFO	postgresql/migrations.go:9	начало миграций
+2025-06-19T07:32:22.112+0400	INFO	postgresql/migrations.go:26	таблица СОЗДАНА!!!
+2025-06-19T07:32:30.268+0400	ERROR	controllers/deleteUserHandler.go:87	Soft delete error	{"op": "Handler.SoftDeleteUserHandler", "error": "<UNK>: SoftDeleteUser.SoftUserDelete: op: SoftDeleteUser.SoftDeleteUser, error: pq: column \"is_deleted\" of relation \"users\" does not exist"}
+2025-06-19T07:35:33.631+0400	INFO	userservice/usecases.go:46	User soft-deleted
+2025-06-19T07:37:34.528+0400	INFO	postgresql/postgresql.go:69	соединения с БД закрыто - УСПЕХ!!!
+2025-06-19T07:37:37.078+0400	INFO	postgresql/postgresql.go:54	успешный коннект с PostgreSQL
+2025-06-19T07:37:37.079+0400	INFO	postgresql/migrations.go:9	начало миграций
+2025-06-19T07:37:37.080+0400	INFO	postgresql/migrations.go:26	таблица СОЗДАНА!!!
+2025-06-19T07:38:16.546+0400	INFO	userservice/usecases.go:15	User created
+2025-06-19T07:39:00.517+0400	INFO	userservice/usecases.go:15	User created
+2025-06-19T07:39:22.484+0400	INFO	userservice/usecases.go:46	User soft-deleted
+2025-06-19T07:39:47.646+0400	INFO	postgresql/postgresql.go:69	соединения с БД закрыто - УСПЕХ!!!
+2025-06-19T07:39:50.132+0400	INFO	postgresql/postgresql.go:54	успешный коннект с PostgreSQL
+2025-06-19T07:39:50.133+0400	INFO	postgresql/migrations.go:9	начало миграций
+2025-06-19T07:39:50.134+0400	INFO	postgresql/migrations.go:26	таблица СОЗДАНА!!!
+2025-06-19T07:40:00.871+0400	INFO	userservice/usecases.go:15	User created
+2025-06-19T07:40:06.362+0400	INFO	userservice/usecases.go:15	User created
+2025-06-19T07:40:19.851+0400	INFO	postgresql/postgresql.go:69	соединения с БД закрыто - УСПЕХ!!!
+2025-06-19T07:40:22.841+0400	INFO	postgresql/postgresql.go:54	успешный коннект с PostgreSQL
+2025-06-19T07:40:22.841+0400	INFO	postgresql/migrations.go:9	начало миграций
+2025-06-19T07:40:22.846+0400	INFO	postgresql/migrations.go:26	таблица СОЗДАНА!!!
+2025-06-19T07:43:32.275+0400	INFO	postgresql/postgresql.go:69	соединения с БД закрыто - УСПЕХ!!!
+2025-06-19T07:43:34.648+0400	INFO	postgresql/postgresql.go:54	успешный коннект с PostgreSQL
+2025-06-19T07:43:34.648+0400	INFO	postgresql/migrations.go:9	начало миграций
+2025-06-19T07:43:34.651+0400	INFO	postgresql/migrations.go:26	таблица СОЗДАНА!!!
+2025-06-19T07:43:47.897+0400	INFO	postgresql/postgresql.go:69	соединения с БД закрыто - УСПЕХ!!!
+2025-06-19T07:43:50.253+0400	INFO	postgresql/postgresql.go:54	успешный коннект с PostgreSQL
+2025-06-19T07:43:50.253+0400	INFO	postgresql/migrations.go:9	начало миграций
+2025-06-19T07:43:50.254+0400	INFO	postgresql/migrations.go:26	таблица СОЗДАНА!!!
+2025-06-19T07:49:22.949+0400	INFO	postgresql/postgresql.go:69	соединения с БД закрыто - УСПЕХ!!!
+2025-06-19T07:49:50.135+0400	INFO	postgresql/postgresql.go:54	успешный коннект с PostgreSQL
+2025-06-19T07:49:50.136+0400	INFO	postgresql/migrations.go:9	начало миграций
+2025-06-19T07:49:50.137+0400	INFO	postgresql/migrations.go:26	таблица СОЗДАНА!!!
+2025-06-19T07:50:59.511+0400	INFO	postgresql/postgresql.go:69	соединения с БД закрыто - УСПЕХ!!!
+2025-06-19T07:51:03.421+0400	INFO	postgresql/postgresql.go:54	успешный коннект с PostgreSQL
+2025-06-19T07:51:03.422+0400	INFO	postgresql/migrations.go:9	начало миграций
+2025-06-19T07:51:03.423+0400	INFO	postgresql/migrations.go:26	таблица СОЗДАНА!!!
+2025-06-19T08:06:51.065+0400	INFO	postgresql/postgresql.go:69	соединения с БД закрыто - УСПЕХ!!!

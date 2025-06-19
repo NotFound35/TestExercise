@@ -91,6 +91,6 @@ func (s *Server) setupRoutes() {
 	s.router.Get("/users/search", s.handlers.GetUserHandler)
 	s.router.Get("/users/list", s.handlers.ListUsersHandler)
 	s.router.Delete("/users/{id}", s.handlers.DeleteUserHandler)
-	//s.router.Delete("/users/delete/hard", s.handlers.HardDeleteUserHandler)
+	s.router.Delete("/users/{id}/soft", s.handlers.SoftDeleteUserHandler)
 
 }

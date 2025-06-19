@@ -37,3 +37,16 @@ func (u *UserService) UserDelete(ctx context.Context, user *models.User) error {
 	u.Log.Info("User deleted")
 	return nil
 }
+
+func (u *UserService) SoftUserDelete(ctx context.Context, user *models.User) error {
+	const op = "SoftDeleteUser.SoftUserDelete"
+	if err := u.Db.SoftDeleteUser(ctx, user); err != nil {
+		return fmt.Errorf("<UNK>: %s: %w", op, err)
+	}
+	u.Log.Info("User soft-deleted")
+	return nil
+}
+
+func (u *UserService) UserUpdate(ctx context.Context, user *models.User) error {
+	return nil
+}

@@ -14,6 +14,7 @@ import (
 type UserDB interface {
 	SaveUser(ctx context.Context, user *models.User) error
 	DeleteUser(ctx context.Context, user *models.User) error
+	SoftDeleteUser(ctx context.Context, user *models.User) error
 	GetUserPostgreSQL(ctx context.Context, firstName, lastName string, age int) ([]models.User, error)
 	ListUsersPostgreSQL(ctx context.Context, minAge, maxAge *int, startDate, endDate *int64) ([]models.User, error)
 }
