@@ -29,6 +29,11 @@ func (u *UserService) ListUsers(
 	return u.Db.ListUsersPostgreSQL(ctx, minAge, maxAge, startDate, endDate)
 }
 
-//func (u *UserService) UserDelete(ctx context.Context, user *models.User) error {
-//	return u.Db.UpdateUser(ctx, user)
-//}
+func (u *UserService) UserDelete(ctx context.Context, user *models.User) error {
+	const op = "DeleteUser"
+	if err := u.Db.DeleteUser(ctx, user); err != nil {
+		return fmt.Errorf("метод: %s: %w", op, err)
+	}
+	u.Log.Info("User deleted")
+	return nil
+}

@@ -11,6 +11,7 @@ import (
 type IUserService interface {
 	GetUser(ctx context.Context, firstName, lastName string, age int) ([]models.User, error)
 	SaveUser(ctx context.Context, user *models.User) error
+	UserDelete(ctx context.Context, user *models.User) error
 	ListUsers(ctx context.Context, minAge, maxAge *int, startDate, endDate *int64) ([]models.User, error)
 }
 

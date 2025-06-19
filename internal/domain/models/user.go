@@ -1,9 +1,11 @@
 package models
 
+import "github.com/google/uuid"
+
 type User struct {
-	ID            string `json:"id"`
-	FirstName     string `json:"first_name"`
-	LastName      string `json:"last_name"`
-	Age           int    `json:"age"`
-	RecordingDate int64  `json:"recording_date"`
+	ID            uuid.UUID `json:"id"`
+	FirstName     string    `json:"first_name"`
+	LastName      string    `json:"last_name"`
+	Age           int       `json:"age"`
+	RecordingDate int64     `json:"recording_date"`
 }
