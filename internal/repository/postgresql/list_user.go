@@ -16,6 +16,7 @@ func (p *PostgreSQL) ListUsersPostgreSQL(
 		SELECT id, first_name, last_name, age, recording_date 
 		FROM users 
 		WHERE 
+		    is_deleted = false AND
 			($1::int IS NULL OR age >= $1) AND
 			($2::int IS NULL OR age <= $2) AND
 			($3::bigint IS NULL OR recording_date >= $3) AND

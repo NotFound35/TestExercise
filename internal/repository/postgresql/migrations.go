@@ -14,7 +14,8 @@ func (p *PostgreSQL) CreateTables() error {
 		last_name VARCHAR(100) NOT NULL,
 		age INTEGER NOT NULL CHECK (age > 0),
 		recording_date BIGINT NOT NULL,
-		created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+		created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+	    is_deleted BOOLEAN DEFAULT FALSE
 	)`
 
 	_, err := p.Db.Exec(query)
