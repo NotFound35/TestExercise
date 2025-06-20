@@ -17,6 +17,7 @@ type UserDB interface {
 	SoftDeleteUser(ctx context.Context, user *models.User) error
 	GetUserPostgreSQL(ctx context.Context, firstName, lastName string, age int) ([]models.User, error)
 	ListUsersPostgreSQL(ctx context.Context, minAge, maxAge *int, startDate, endDate *int64) ([]models.User, error)
+	UserUpdate(ctx context.Context, user *models.User) error
 }
 
 type PostgreSQL struct {

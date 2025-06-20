@@ -8,5 +8,5 @@ type User struct {
 	LastName      string    `json:"last_name"`
 	Age           int       `json:"age"`
 	RecordingDate int64     `json:"recording_date"`
-	IsDeleted     bool      `json:"is_deleted"`
+	IsDeleted     bool      `json:"-"`
 }
