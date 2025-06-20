@@ -39,7 +39,7 @@ func (u *UserService) UserDelete(ctx context.Context, user *models.User) error {
 }
 
 func (u *UserService) SoftUserDelete(ctx context.Context, user *models.User) error {
-	const op = "SoftDeleteUser.SoftUserDelete"
+	const op = "SoftUserDelete"
 	if err := u.Db.SoftDeleteUser(ctx, user); err != nil {
 		return fmt.Errorf("<UNK>: %s: %w", op, err)
 	}
@@ -48,5 +48,11 @@ func (u *UserService) SoftUserDelete(ctx context.Context, user *models.User) err
 }
 
 func (u *UserService) UserUpdate(ctx context.Context, user *models.User) error {
+	const op = "UserService.UserUpdate"
+	if err := u.Db.UserUpdate(ctx, user); err != nil {
+		return fmt.Errorf("%s: %w", op, err)
+	}
+
+	u.Log.Info("User updated")
 	return nil
 }

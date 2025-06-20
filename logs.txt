@@ -177,3 +177,23 @@
 2025-06-19T07:51:03.422+0400	INFO	postgresql/migrations.go:9	начало миграций
 2025-06-19T07:51:03.423+0400	INFO	postgresql/migrations.go:26	таблица СОЗДАНА!!!
 2025-06-19T08:06:51.065+0400	INFO	postgresql/postgresql.go:69	соединения с БД закрыто - УСПЕХ!!!
+2025-06-19T11:08:27.980+0400	INFO	postgresql/postgresql.go:55	успешный коннект с PostgreSQL
+2025-06-19T11:08:27.981+0400	INFO	postgresql/migrations.go:9	начало миграций
+2025-06-19T11:08:27.982+0400	INFO	postgresql/migrations.go:26	таблица СОЗДАНА!!!
+2025-06-19T11:40:33.648+0400	INFO	postgresql/postgresql.go:70	соединения с БД закрыто - УСПЕХ!!!
+2025-06-20T22:27:18.991+0400	INFO	postgresql/postgresql.go:55	успешный коннект с PostgreSQL
+2025-06-20T22:27:18.992+0400	INFO	postgresql/migrations.go:9	начало миграций
+2025-06-20T22:27:18.996+0400	INFO	postgresql/migrations.go:26	таблица СОЗДАНА!!!
+2025-06-20T22:28:31.413+0400	INFO	userservice/usecases.go:56	User updated
+2025-06-20T22:29:21.695+0400	INFO	userservice/usecases.go:56	User updated
+2025-06-20T22:31:09.990+0400	INFO	postgresql/postgresql.go:70	соединения с БД закрыто - УСПЕХ!!!
+2025-06-20T22:31:12.998+0400	INFO	postgresql/postgresql.go:55	успешный коннект с PostgreSQL
+2025-06-20T22:31:12.998+0400	INFO	postgresql/migrations.go:9	начало миграций
+2025-06-20T22:31:12.999+0400	INFO	postgresql/migrations.go:26	таблица СОЗДАНА!!!
+2025-06-20T22:31:25.307+0400	INFO	userservice/usecases.go:56	User updated
+2025-06-20T22:34:57.586+0400	INFO	postgresql/postgresql.go:70	соединения с БД закрыто - УСПЕХ!!!
+2025-06-20T22:35:00.704+0400	INFO	postgresql/postgresql.go:55	успешный коннект с PostgreSQL
+2025-06-20T22:35:00.705+0400	INFO	postgresql/migrations.go:9	начало миграций
+2025-06-20T22:35:00.706+0400	INFO	postgresql/migrations.go:26	таблица СОЗДАНА!!!
+2025-06-20T22:35:04.685+0400	INFO	userservice/usecases.go:56	User updated
+2025-06-20T22:35:19.425+0400	INFO	userservice/usecases.go:56	User updated

@@ -92,5 +92,6 @@ func (s *Server) setupRoutes() {
 	s.router.Get("/users/list", s.handlers.ListUsersHandler)
 	s.router.Delete("/users/{id}", s.handlers.DeleteUserHandler)
 	s.router.Delete("/users/{id}/soft", s.handlers.SoftDeleteUserHandler)
+	s.router.Patch("/users/{id}/update", s.handlers.UpdateUserHandler)
 
 }
