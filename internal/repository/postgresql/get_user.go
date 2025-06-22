@@ -51,3 +51,11 @@ func (p *PostgreSQL) GetUserPostgreSQL(ctx context.Context, firstName, lastName 
 
 	return answer, nil
 }
+
+func (p *PostgreSQL) GetUserByEmail(ctx context.Context, email string) (*models.User, error) {
+	user, err := p.GetUserByEmail(ctx, email)
+	if err != nil {
+		return nil, err
+	}
+	return user, nil
+}

@@ -266,3 +266,7 @@
 2025-06-22T05:08:28.762+0400	INFO	postgresql/migrations.go:9	начало миграций
 2025-06-22T05:08:28.763+0400	INFO	postgresql/migrations.go:28	таблица СОЗДАНА!!!
 2025-06-22T05:32:16.355+0400	INFO	postgresql/postgresql.go:70	соединения с БД закрыто - УСПЕХ!!!
+2025-06-22T08:07:26.984+0400	INFO	postgresql/postgresql.go:56	успешный коннект с PostgreSQL
+2025-06-22T08:07:26.984+0400	INFO	postgresql/migrations.go:9	начало миграций
+2025-06-22T08:07:26.987+0400	INFO	postgresql/migrations.go:28	таблица СОЗДАНА!!!
+2025-06-22T08:07:46.398+0400	INFO	postgresql/postgresql.go:71	соединения с БД закрыто - УСПЕХ!!!

@@ -2,6 +2,8 @@ syntax = "proto3";
 
 package auth;
 
+option go_package = "awesomProject/internal/authgprc/proto;authpb";
+
 service Auth {
   rpc Register(RegisterRequest) returns (RegisterResponse);
   rpc Login(LoginRequest) returns (LoginResponse);
@@ -13,7 +15,7 @@ message RegisterRequest {
 }
 
 message RegisterResponse {
-  int64 user_id = 1;
+  string user_id = 1;
 }
 
 message LoginRequest {

@@ -4,6 +4,7 @@ import (
 	"awesomeProject/internal/domain/models"
 	"context"
 	"fmt"
+	"go.uber.org/zap"
 )
 
 func (u *UserService) SaveUser(ctx context.Context, user *models.User) error {
@@ -55,4 +56,13 @@ func (u *UserService) UserUpdate(ctx context.Context, user *models.User) error {
 
 	u.Log.Info("User updated")
 	return nil
+}
+
+func (u *UserService) GetUserByEmail(ctx context.Context, email string) (*models.User, error) {
+	user, err := u.Db.GetUserByEmail(ctx, email)
+	if err != nil {
+		u.Log.Error("GetUserByEmail failed", zap.Error(err))
+		return nil, err
+	}
+	return user, nil
 }
