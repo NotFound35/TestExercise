@@ -17,6 +17,8 @@ type Request struct {
 		FirstName string `json:"first_name"`
 		LastName  string `json:"last_name"`
 		Age       int    `json:"age"`
+		Email     string `json:"email"`
+		Password  string `json:"password"`
 	} `json:"user"`
 }
 
@@ -54,6 +56,8 @@ func (h *Handler) SaveUserHandler(w http.ResponseWriter, r *http.Request) {
 		FirstName: req.User.FirstName,
 		LastName:  req.User.LastName,
 		Age:       req.User.Age,
+		Email:     req.User.Email,
+		Password:  req.User.Password,
 	}
 
 	err := h.UserService.SaveUser(ctx, user)

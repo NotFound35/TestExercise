@@ -13,7 +13,7 @@ func (p *PostgreSQL) ListUsersPostgreSQL(
 ) ([]models.User, error) {
 	const op = "ListUsersPostgreSQL"
 	query := `
-		SELECT id, first_name, last_name, age, recording_date 
+		SELECT id, first_name, last_name, age, recording_date, email 
 		FROM users 
 		WHERE 
 		    is_deleted = false AND
@@ -38,6 +38,7 @@ func (p *PostgreSQL) ListUsersPostgreSQL(
 			&user.LastName,
 			&user.Age,
 			&user.RecordingDate,
+			&user.Email,
 		)
 		if err != nil {
 			return nil, fmt.Errorf("op: %s, %w", op, err)

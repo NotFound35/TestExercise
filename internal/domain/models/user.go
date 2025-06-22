@@ -9,4 +9,6 @@ type User struct {
 	Age           int       `json:"age"`
 	RecordingDate int64     `json:"recording_date"`
 	IsDeleted     bool      `json:"-"`
+	Email         string    `json:"email"`
+	Password      string    `json:"-"`
 }
