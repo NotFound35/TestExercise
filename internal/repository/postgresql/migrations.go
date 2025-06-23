@@ -13,7 +13,6 @@ func (p *PostgreSQL) CreateTables() error {
 		first_name VARCHAR(100) NOT NULL,
 		last_name VARCHAR(100) NOT NULL,
 		age INTEGER NOT NULL CHECK (age > 0),
-		recording_date BIGINT NOT NULL,
 		created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
 	    is_deleted BOOLEAN DEFAULT FALSE
 	)`

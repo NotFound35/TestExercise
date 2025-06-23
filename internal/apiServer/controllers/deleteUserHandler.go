@@ -72,12 +72,12 @@ func (h *Handler) SoftDeleteUserHandler(w http.ResponseWriter, r *http.Request) 
 	defer cancel()
 
 	idStr := chi.URLParam(r, "id")
-	if idStr == "" {
-		h.Log.Error("missing user id in URL", zap.String("op", op))
-	}
+
 	userID, err := uuid.Parse(idStr)
 	if err != nil {
 		h.Log.Error("Ivalid user id format", zap.String("op", op))
+		responseWithError(w, http.StatusBadRequest, "invalid user id format")
+		return
 	}
 	user := &models.User{
 		ID: userID,
