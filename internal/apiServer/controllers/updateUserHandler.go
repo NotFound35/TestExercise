@@ -18,10 +18,6 @@ func (h *Handler) UpdateUserHandler(w http.ResponseWriter, r *http.Request) {
 	defer cancel()
 
 	idStr := chi.URLParam(r, "id")
-	if idStr == "" {
-		h.Log.Error("ID is missing", zap.String("op", op))
-		responseWithError(w, http.StatusBadRequest, "ID is missing")
-	}
 
 	userID, err := uuid.Parse(idStr)
 	if err != nil {

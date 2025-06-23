@@ -5,20 +5,18 @@ import (
 	"context"
 	"fmt"
 	"github.com/google/uuid"
-	"time"
 )
 
 func (p *PostgreSQL) SaveUser(ctx context.Context, user *models.User) error {
 	const op = "CreateUser.SaveUser"
 
-	query := `INSERT INTO users (id, first_name, last_name, age, recording_date) 
-	          VALUES ($1, $2, $3, $4, $5)`
+	query := `INSERT INTO users (id, first_name, last_name, age) 
+	          VALUES ($1, $2, $3, $4)`
 	_, err := p.Db.ExecContext(ctx, query,
 		uuid.New(),
 		user.FirstName,
 		user.LastName,
 		user.Age,
-		time.Now().Unix(),
 	)
 
 	if err != nil {

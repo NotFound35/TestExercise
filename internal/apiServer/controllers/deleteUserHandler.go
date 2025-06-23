@@ -31,12 +31,6 @@ func (h *Handler) DeleteUserHandler(w http.ResponseWriter, r *http.Request) {
 
 	idStr := chi.URLParam(r, "id")
 
-	if idStr == "" {
-		h.Log.Error("пустой id", zap.String("op", op))
-		responseWithError(w, http.StatusBadRequest, "пустой id")
-		return
-	}
-
 	userID, err := uuid.Parse(idStr)
 	if err != nil {
 		h.Log.Error("ошибка преобразования (парсинга) id",
@@ -63,7 +57,6 @@ func (h *Handler) DeleteUserHandler(w http.ResponseWriter, r *http.Request) {
 	responseWithJson(w, http.StatusOK, DeleteResponse{
 		Message: "User deleted",
 	})
-
 }
 
 func (h *Handler) SoftDeleteUserHandler(w http.ResponseWriter, r *http.Request) {
@@ -72,12 +65,12 @@ func (h *Handler) SoftDeleteUserHandler(w http.ResponseWriter, r *http.Request) 
 	defer cancel()
 
 	idStr := chi.URLParam(r, "id")
-	if idStr == "" {
-		h.Log.Error("missing user id in URL", zap.String("op", op))
-	}
+
 	userID, err := uuid.Parse(idStr)
 	if err != nil {
 		h.Log.Error("Ivalid user id format", zap.String("op", op))
+		responseWithError(w, http.StatusBadRequest, "invalid user id format")
+		return
 	}
 	user := &models.User{
 		ID: userID,
