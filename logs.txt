@@ -218,3 +218,23 @@
 2025-06-23T16:45:01.904+0300	INFO	postgresql/migrations.go:25	таблица СОЗДАНА!!!
 2025-06-23T16:45:09.249+0300	ERROR	controllers/deleteUserHandler.go:79	Ivalid user id format	{"op": "Handler.SoftDeleteUserHandler"}
 2025-06-23T16:47:52.250+0300	INFO	postgresql/postgresql.go:70	соединения с БД закрыто - УСПЕХ!!!
+2025-06-23T17:30:19.791+0300	INFO	postgresql/postgresql.go:55	успешный коннект с PostgreSQL
+2025-06-23T17:30:19.792+0300	INFO	postgresql/migrations.go:9	начало миграций
+2025-06-23T17:30:19.799+0300	INFO	postgresql/migrations.go:25	таблица СОЗДАНА!!!
+2025-06-23T17:30:41.935+0300	INFO	postgresql/postgresql.go:70	соединения с БД закрыто - УСПЕХ!!!
+2025-06-23T17:31:38.184+0300	INFO	postgresql/postgresql.go:55	успешный коннект с PostgreSQL
+2025-06-23T17:31:38.184+0300	INFO	postgresql/migrations.go:9	начало миграций
+2025-06-23T17:31:38.186+0300	INFO	postgresql/migrations.go:25	таблица СОЗДАНА!!!
+2025-06-23T17:31:55.087+0300	INFO	postgresql/postgresql.go:70	соединения с БД закрыто - УСПЕХ!!!
+2025-06-23T17:32:31.784+0300	INFO	postgresql/postgresql.go:55	успешный коннект с PostgreSQL
+2025-06-23T17:32:31.785+0300	INFO	postgresql/migrations.go:9	начало миграций
+2025-06-23T17:32:31.786+0300	INFO	postgresql/migrations.go:25	таблица СОЗДАНА!!!
+2025-06-23T17:32:44.697+0300	INFO	postgresql/postgresql.go:70	соединения с БД закрыто - УСПЕХ!!!
+2025-06-23T17:41:07.055+0300	INFO	postgresql/postgresql.go:55	успешный коннект с PostgreSQL
+2025-06-23T17:41:07.057+0300	INFO	postgresql/migrations.go:9	начало миграций
+2025-06-23T17:41:07.064+0300	INFO	postgresql/migrations.go:25	таблица СОЗДАНА!!!
+2025-06-23T17:50:09.575+0300	INFO	postgresql/postgresql.go:70	соединения с БД закрыто - УСПЕХ!!!
+2025-06-23T17:50:27.067+0300	INFO	postgresql/postgresql.go:55	успешный коннект с PostgreSQL
+2025-06-23T17:50:27.067+0300	INFO	postgresql/migrations.go:9	начало миграций
+2025-06-23T17:50:27.076+0300	INFO	postgresql/migrations.go:24	таблица users уже существует
+2025-06-23T17:52:27.398+0300	INFO	postgresql/postgresql.go:70	соединения с БД закрыто - УСПЕХ!!!

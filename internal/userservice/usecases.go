@@ -19,18 +19,20 @@ func (u *UserService) SaveUser(ctx context.Context, user *models.User) error {
 
 func (u *UserService) GetUser(ctx context.Context, firstName, lastName string, age int) ([]models.User, error) {
 	const op = "GetUser"
-	if users, err := u.Db.GetUserPostgreSQL(ctx, firstName, lastName, age); err != nil {
+	users, err := u.Db.GetUserPostgreSQL(ctx, firstName, lastName, age)
+	if err != nil {
 		return nil, fmt.Errorf("op %s: err %w", op, err)
 	}
 	return users, nil
 }
 
-func (u *UserService) ListUsers(
-	ctx context.Context,
-	minAge, maxAge *int,
-	startDate, endDate *int64,
-) ([]models.User, error) {
-	return u.Db.ListUsersPostgreSQL(ctx, minAge, maxAge, startDate, endDate)
+func (u *UserService) ListUsers(ctx context.Context, minAge, maxAge *int, startDate, endDate *int64) ([]models.User, error) {
+	const op = "ListUser"
+	users, err := u.Db.ListUsersPostgreSQL(ctx, minAge, maxAge, startDate, endDate)
+	if err != nil {
+		return nil, fmt.Errorf("op %s: err %w", op, err)
+	}
+	return users, nil
 }
 
 func (u *UserService) UserDelete(ctx context.Context, user *models.User) error {
@@ -56,7 +58,6 @@ func (u *UserService) UserUpdate(ctx context.Context, user *models.User) error {
 	if err := u.Db.UserUpdate(ctx, user); err != nil {
 		return fmt.Errorf("op %s: err %w", op, err)
 	}
-
 	u.Log.Info("User updated")
 	return nil
 }
