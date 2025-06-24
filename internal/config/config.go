@@ -3,6 +3,7 @@ package config
 import (
 	"fmt"
 	"github.com/ilyakaznacheev/cleanenv"
+	"go.uber.org/zap"
 	"os"
 	"time"
 )
@@ -10,26 +11,24 @@ import (
 type Config struct {
 	Env        string     `yaml:"env"`
 	Database   Database   `yaml:"database"`
-	Logger     Logger     `yaml:"logger"`
+	Logger     zap.Logger `yaml:"logger"`
 	HTTPServer HTTPServer `yaml:"http-server"`
 }
 
-func MustLoad() *Config {
+func MustLoad() (*Config, error) {
 	const op = "MustLoad"
 	configPath := "config/config.yaml"
 
 	if _, err := os.Stat(configPath); os.IsNotExist(err) {
-		//todo log / return
-		fmt.Errorf("функция %v: %v", op, err)
-		return nil
+		return nil, fmt.Errorf("op %s: %w", op, err)
 	}
 
 	var cfg Config
 	if err := cleanenv.ReadConfig(configPath, &cfg); err != nil {
-		fmt.Errorf("функция %v: %v", op, err)
+		return nil, fmt.Errorf("op %s: %w", op, err)
 	}
 
-	return &cfg
+	return &cfg, nil
 }
 
 type Database struct {

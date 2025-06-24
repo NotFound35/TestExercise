@@ -9,7 +9,7 @@ import (
 )
 
 func (p *PostgreSQL) SaveUser(ctx context.Context, user *models.User) error {
-	const op = "CreateUser.SaveUser"
+	const op = "SaveUserPostgreSQL"
 
 	query := `INSERT INTO users (id, first_name, last_name, age, recording_date) 
 	          VALUES ($1, $2, $3, $4, $5)`
@@ -22,7 +22,7 @@ func (p *PostgreSQL) SaveUser(ctx context.Context, user *models.User) error {
 	)
 
 	if err != nil {
-		return fmt.Errorf("op: %v, error: %v", op, err)
+		return fmt.Errorf("op %s: err %w", op, err)
 	}
 
 	return nil

@@ -6,17 +6,22 @@ import (
 	"awesomeProject/internal/repository/postgresql"
 	"awesomeProject/internal/userservice"
 	"awesomeProject/logger"
-	"fmt"
+	"go.uber.org/zap"
 )
 
 func main() {
-	cfg := config.MustLoad()
-
 	log := logger.New()
 
-	db, err := postgresql.NewPostgreSQL(cfg, log)
+	cfg, err := config.MustLoad()
 	if err != nil {
-		fmt.Println("проблема с соединения с бд", err)
+		log.Fatal("failed to load config",
+			zap.Error(err))
+	}
+
+	db, err := postgresql.NewPostgreSQL(cfg)
+	if err != nil {
+		log.Fatal("error connecting to database",
+			zap.Error(err))
 	}
 
 	userService := userservice.NewUserService(db, log)

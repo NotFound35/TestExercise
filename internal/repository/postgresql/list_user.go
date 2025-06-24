@@ -25,7 +25,7 @@ func (p *PostgreSQL) ListUsersPostgreSQL(
 
 	rows, err := p.Db.QueryContext(ctx, query, minAge, maxAge, startDate, endDate)
 	if err != nil {
-		return nil, fmt.Errorf("op: %s, %w", op, err)
+		return nil, fmt.Errorf("op %s: err %w", op, err)
 	}
 	defer rows.Close()
 
@@ -40,7 +40,7 @@ func (p *PostgreSQL) ListUsersPostgreSQL(
 			&user.RecordingDate,
 		)
 		if err != nil {
-			return nil, fmt.Errorf("op: %s, %w", op, err)
+			return nil, fmt.Errorf("op %s: err %w", op, err)
 		}
 		users = append(users, user)
 	}
