@@ -10,14 +10,12 @@ import (
 	"strings"
 )
 
-func ValidateJSONBody(r *http.Request, v interface{}, log *zap.Logger, op string) error {
+func validateJSONBody(r *http.Request, v interface{}, log *zap.Logger, op string) error {
 	if r.Body == nil || r.Body == http.NoBody {
-		log.Error("body is nil", zap.String("op", op))
 		return fmt.Errorf("body is nil")
 	}
 	bodyBytes, err := io.ReadAll(r.Body)
 	if err != nil {
-		log.Error("failed to read request body", zap.String("op", op), zap.Error(err))
 		return fmt.Errorf("invalid request body")
 	}
 	defer r.Body.Close()
@@ -38,9 +36,6 @@ func ValidateJSONBody(r *http.Request, v interface{}, log *zap.Logger, op string
 				detailedErr = fmt.Errorf("JSON parsing error: %v", err)
 			}
 		}
-		log.Error("invalid JSON",
-			zap.String("op", op),
-			zap.Error(detailedErr))
 		return detailedErr
 	}
 	return nil
