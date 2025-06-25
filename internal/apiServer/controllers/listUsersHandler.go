@@ -29,19 +29,24 @@ func (h *Handler) ListUsersHandler(w http.ResponseWriter, r *http.Request) {
 	ctx, cancel := context.WithTimeout(r.Context(), 10*time.Second)
 	defer cancel()
 
-	var params ListUsersParams
+	var req Request
+	if err := ValidateJSONBody(r, &req, h.Log, op); err != nil {
+		responseWithError(w, http.StatusBadRequest, err.Error())
+		return
+	}
 
+	var params ListUsersParams
 	query := r.URL.Query()
 
 	if minAgeStr := query.Get("min_age"); minAgeStr != "" {
 		if age, err := strconv.Atoi(minAgeStr); err == nil {
 			params.MinAge = &age
 		} else {
-			h.Log.Error("ошибка преобразования (парсинга) min_age",
+			h.Log.Error("invalid min_age",
 				zap.String("op", op),
 				zap.String("value", minAgeStr),
 				zap.Error(err))
-			responseWithError(w, http.StatusBadRequest, "некорректный min_age")
+			responseWithError(w, http.StatusBadRequest, err.Error())
 			return
 		}
 	}
@@ -50,11 +55,11 @@ func (h *Handler) ListUsersHandler(w http.ResponseWriter, r *http.Request) {
 		if age, err := strconv.Atoi(maxAgeStr); err == nil {
 			params.MaxAge = &age
 		} else {
-			h.Log.Error("ошибка преобразования (парсинга) max_age",
+			h.Log.Error(" ",
 				zap.String("op", op),
 				zap.String("value", maxAgeStr),
 				zap.Error(err))
-			responseWithError(w, http.StatusBadRequest, "некорректный max_age")
+			responseWithError(w, http.StatusBadRequest, err.Error())
 			return
 		}
 	}
@@ -63,11 +68,11 @@ func (h *Handler) ListUsersHandler(w http.ResponseWriter, r *http.Request) {
 		if date, err := strconv.ParseInt(startDateStr, 10, 64); err == nil {
 			params.StartDate = &date
 		} else {
-			h.Log.Error("ошибка преобразования (парсинга) start_date",
+			h.Log.Error("invalid start_date",
 				zap.String("op", op),
 				zap.String("value", startDateStr),
 				zap.Error(err))
-			responseWithError(w, http.StatusBadRequest, "некорректный start_date")
+			responseWithError(w, http.StatusBadRequest, err.Error())
 			return
 		}
 	}
@@ -76,30 +81,30 @@ func (h *Handler) ListUsersHandler(w http.ResponseWriter, r *http.Request) {
 		if date, err := strconv.ParseInt(endDateStr, 10, 64); err == nil {
 			params.EndDate = &date
 		} else {
-			h.Log.Error("ошибка преобразования (парсинга) end_date",
+			h.Log.Error("invalid end_date",
 				zap.String("op", op),
 				zap.String("value", endDateStr),
 				zap.Error(err))
-			responseWithError(w, http.StatusBadRequest, "некорректный end_date")
+			responseWithError(w, http.StatusBadRequest, err.Error())
 			return
 		}
 	}
 
-	if err := ValidationListUsers(params); err != nil {
-		h.Log.Error("валидация не пройдена",
+	if err := h.ValidationListUsers(params); err != nil {
+		h.Log.Error("validation error",
 			zap.String("op", op),
+			zap.Any("params", params),
 			zap.Error(err))
 		responseWithError(w, http.StatusBadRequest, err.Error())
-
 		return
 	}
 
 	users, err := h.UserService.ListUsers(ctx, params.MinAge, params.MaxAge, params.StartDate, params.EndDate)
 	if err != nil {
-		h.Log.Error("ошибка при получении пользователей",
+		h.Log.Error("error listing users",
 			zap.String("op", op),
 			zap.Error(err))
-		responseWithError(w, http.StatusInternalServerError, "ошибка сервера")
+		responseWithError(w, http.StatusInternalServerError, "couldnt list users")
 		return
 	}
 
@@ -108,35 +113,35 @@ func (h *Handler) ListUsersHandler(w http.ResponseWriter, r *http.Request) {
 	})
 }
 
-func ValidationListUsers(params ListUsersParams) error {
+func (h *Handler) ValidationListUsers(params ListUsersParams) error {
 	var validationErrors []string
 
 	if params.MinAge != nil && *params.MinAge < 0 {
-		validationErrors = append(validationErrors, "минимальный возраст не может быть отрицательным")
+		validationErrors = append(validationErrors, "min age must not be negative")
 	}
 
 	if params.MaxAge != nil && *params.MaxAge < 0 {
-		validationErrors = append(validationErrors, "максимальный возраст не может быть отрицательным")
+		validationErrors = append(validationErrors, "max age must not be negative")
 	}
 
 	if params.MinAge != nil && params.MaxAge != nil && *params.MinAge > *params.MaxAge {
-		validationErrors = append(validationErrors, "минимальный возраст не может быть больше максимального")
+		validationErrors = append(validationErrors, "min age must not be greater than max age")
 	}
 
 	if params.StartDate != nil && *params.StartDate < 0 {
-		validationErrors = append(validationErrors, "начальная дата не может быть отрицательной")
+		validationErrors = append(validationErrors, "start date must not be negative")
 	}
 
 	if params.EndDate != nil && *params.EndDate < 0 {
-		validationErrors = append(validationErrors, "конечная дата не может быть отрицательной")
+		validationErrors = append(validationErrors, "end date must not be negative")
 	}
 
 	if params.StartDate != nil && params.EndDate != nil && *params.StartDate > *params.EndDate {
-		validationErrors = append(validationErrors, "начальная дата не может быть больше конечной")
+		validationErrors = append(validationErrors, "start date must not be greater than end date")
 	}
 
 	if len(validationErrors) > 0 { //если есть ошибки
-		return fmt.Errorf(strings.Join(validationErrors, "\n"))
+		return fmt.Errorf(strings.Join(validationErrors, ", "))
 	}
 
 	return nil

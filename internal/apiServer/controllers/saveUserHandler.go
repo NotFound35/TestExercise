@@ -3,7 +3,6 @@ package controllers
 import (
 	"awesomeProject/internal/domain/models"
 	"context"
-	"encoding/json"
 	"fmt"
 	"net/http"
 	"strings"
@@ -13,11 +12,9 @@ import (
 )
 
 type Request struct {
-	User struct {
-		FirstName string `json:"first_name"`
-		LastName  string `json:"last_name"`
-		Age       int    `json:"age"`
-	} `json:"user"`
+	FirstName string `json:"first_name"`
+	LastName  string `json:"last_name"`
+	Age       int    `json:"age"`
 }
 
 type Response struct {
@@ -31,19 +28,15 @@ func (h *Handler) SaveUserHandler(w http.ResponseWriter, r *http.Request) {
 	defer cancel()
 
 	var req Request
-
-	if err := json.NewDecoder(r.Body).Decode(&req); err != nil {
-		h.Log.Error("ошибка декодирования кода",
-			zap.String("op", op),
-			zap.Error(err),
-		)
-		responseWithError(w, http.StatusBadRequest, "неверный JSON")
-		return //ОБЯЗАТЕЛЬНО
+	if err := ValidateJSONBody(r, &req, h.Log, op); err != nil {
+		responseWithError(w, http.StatusBadRequest, err.Error())
+		return
 	}
 
-	if err := Validation(req); err != nil {
-		h.Log.Error("валидация не пройдена",
+	if err := h.Validation(req); err != nil {
+		h.Log.Error("validation error",
 			zap.String("op", op),
+			zap.Any("request", req),
 			zap.Error(err),
 		)
 		responseWithError(w, http.StatusBadRequest, err.Error())
@@ -51,48 +44,47 @@ func (h *Handler) SaveUserHandler(w http.ResponseWriter, r *http.Request) {
 	}
 
 	user := &models.User{
-		FirstName: req.User.FirstName,
-		LastName:  req.User.LastName,
-		Age:       req.User.Age,
+		FirstName: req.FirstName,
+		LastName:  req.LastName,
+		Age:       req.Age,
 	}
 
-	err := h.UserService.SaveUser(ctx, user)
-	if err != nil {
-		h.Log.Error("юзер не сохранен",
+	if err := h.UserService.SaveUser(ctx, user); err != nil {
+		h.Log.Error("error saving user",
 			zap.String("op", op),
 			zap.Error(err),
 		)
-		responseWithError(w, http.StatusInternalServerError, "ошибка при сохранении")
+		responseWithError(w, http.StatusInternalServerError, "couldnt save user")
 		return
 	}
 
+	h.Log.Info("save user success")
 	responseWithJson(w, http.StatusCreated, Response{
-		Message: fmt.Sprintf("пользователь %s успешно сохранен", user.FirstName),
+		Message: fmt.Sprintf("user %s saved", user.FirstName),
 	})
-
 }
 
-func Validation(req Request) error {
+func (h *Handler) Validation(req Request) error {
 	var validationErrors []string
 
-	firstName := strings.TrimSpace(req.User.FirstName)
+	firstName := strings.TrimSpace(req.FirstName)
 	if firstName == "" {
-		validationErrors = append(validationErrors, "имя своё назови")
+		validationErrors = append(validationErrors, "enter your first_name")
 	}
 
-	lastName := strings.TrimSpace(req.User.LastName)
+	lastName := strings.TrimSpace(req.LastName)
 	if lastName == "" {
-		validationErrors = append(validationErrors, "а фамилию?")
+		validationErrors = append(validationErrors, "enter your last_name")
 	}
 
-	if req.User.Age <= 0 {
-		validationErrors = append(validationErrors, "ты чё, не родился еще?")
-	} else if req.User.Age > 120 {
-		validationErrors = append(validationErrors, "слишком старый")
+	if req.Age <= 0 {
+		validationErrors = append(validationErrors, "age must be greater than zero")
+	} else if req.Age > 120 {
+		validationErrors = append(validationErrors, "age must be less than 120")
 	}
 
 	if len(validationErrors) > 0 {
-		return fmt.Errorf(strings.Join(validationErrors, "\n"))
+		return fmt.Errorf(strings.Join(validationErrors, ", "))
 	}
 
 	return nil

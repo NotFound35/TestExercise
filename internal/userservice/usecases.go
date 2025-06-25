@@ -23,6 +23,8 @@ func (u *UserService) GetUser(ctx context.Context, firstName, lastName string, a
 	if err != nil {
 		return nil, fmt.Errorf("op %s: err %w", op, err)
 	}
+
+	u.Log.Info("users found")
 	return users, nil
 }
 
@@ -32,6 +34,7 @@ func (u *UserService) ListUsers(ctx context.Context, minAge, maxAge *int, startD
 	if err != nil {
 		return nil, fmt.Errorf("op %s: err %w", op, err)
 	}
+	u.Log.Info("users found")
 	return users, nil
 }
 
