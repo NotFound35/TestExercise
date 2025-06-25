@@ -30,8 +30,11 @@ func (h *Handler) ListUsersHandler(w http.ResponseWriter, r *http.Request) {
 	defer cancel()
 
 	var req Request
-	if err := ValidateJSONBody(r, &req, h.Log, op); err != nil {
-		responseWithError(w, http.StatusBadRequest, err.Error())
+	if err := validateJSONBody(r, &req, h.Log, op); err != nil {
+		h.Log.Error("error validation JSON",
+			zap.String("op", op),
+			zap.Error(err))
+		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
 
