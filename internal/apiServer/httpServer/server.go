@@ -6,7 +6,6 @@ import (
 	"awesomeProject/internal/userservice"
 	"context"
 	"errors"
-	"fmt"
 	"net/http"
 	"os"
 	"os/signal"
@@ -19,20 +18,22 @@ import (
 type Server struct {
 	router   *chi.Mux
 	handlers *controllers.Handler
+	log      *zap.Logger
 }
 
 func NewServer(u userservice.IUserService, log *zap.Logger) *Server {
 	server := &Server{
 		router:   chi.NewRouter(),
 		handlers: controllers.NewHandler(u, log),
+		log:      log,
 	}
 	server.setupRoutes()
 	return server
 }
 
 func (s *Server) Run(cfg *config.Config) {
-	const op = "Run"
-	fmt.Println("Cервер запущен")
+	const op = "Server.Run"
+	s.log.Info("server is starting")
 	server := &http.Server{
 		Addr:         cfg.HTTPServer.Address,
 		Handler:      s.router,
@@ -44,23 +45,27 @@ func (s *Server) Run(cfg *config.Config) {
 	signal.Notify(stop, os.Interrupt)
 
 	go func() {
-		fmt.Println("Ожидание запросов")
+		s.log.Info("waiting request")
 		err := http.ListenAndServe(cfg.HTTPServer.Address, s.router)
 		if err != nil && !errors.Is(err, http.ErrServerClosed) {
-			fmt.Errorf("метод %v: %v", op, err)
+			s.log.Fatal("error with starting server",
+				zap.String("op", op),
+				zap.Error(err),
+			)
 		}
 	}()
 
 	<-stop
-	fmt.Println("Сервер выключается...")
 	ctx, cancel := context.WithTimeout(context.Background(), 5*time.Second)
 	defer cancel()
 
 	err := server.Shutdown(ctx)
 	if err != nil {
-		fmt.Errorf("метод %v: %v", op, err)
+		s.log.Error("error with shutdown server",
+			zap.String("op", op),
+			zap.Error(err),
+		)
 	}
-	fmt.Println("Сервер завершен КОРРЕКТНО")
 }
 
 func (s *Server) Middleware(next http.Handler) http.Handler {
@@ -68,8 +73,10 @@ func (s *Server) Middleware(next http.Handler) http.Handler {
 	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
 		defer func() {
 			if err := recover(); err != nil {
-				//todo log / return
-				fmt.Errorf("метод %v: %v", op, err)
+				s.log.Error("error with Middleware",
+					zap.String("op", op),
+					zap.Error(err.(error)),
+				)
 				w.WriteHeader(http.StatusInternalServerError)
 				return
 			}
@@ -81,9 +88,12 @@ func (s *Server) Middleware(next http.Handler) http.Handler {
 func (s *Server) setupRoutes() {
 	const op = "setupRoutes"
 	s.router.Get("/", func(w http.ResponseWriter, r *http.Request) {
-		_, err := w.Write([]byte("Сервер работает")) //проверка работоспособности сервера
+		_, err := w.Write([]byte("server is running"))
 		if err != nil {
-			fmt.Errorf("метод %v: %v", op, err)
+			s.log.Error("error with setup route",
+				zap.String("op", op),
+				zap.Error(err),
+			)
 		}
 	})
 
@@ -91,7 +101,7 @@ func (s *Server) setupRoutes() {
 	s.router.Get("/users/search", s.handlers.GetUserHandler)
 	s.router.Get("/users/list", s.handlers.ListUsersHandler)
 	s.router.Delete("/users/{id}", s.handlers.DeleteUserHandler)
-	s.router.Delete("/users/soft/{id}", s.handlers.SoftDeleteUserHandler)
-	s.router.Patch("/users/update/{id}", s.handlers.UpdateUserHandler)
+	s.router.Delete("/users/{id}/soft", s.handlers.SoftDeleteUserHandler)
+	s.router.Patch("/users/{id}/update", s.handlers.UpdateUserHandler)
 
 }

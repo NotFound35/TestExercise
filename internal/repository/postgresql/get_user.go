@@ -33,20 +33,20 @@ func (p *PostgreSQL) GetUserPostgreSQL(ctx context.Context, firstName, lastName 
 
 	rows, err := p.Db.QueryContext(ctx, query, search...)
 	if err != nil {
-		return nil, fmt.Errorf("op: %s, %w", op, err)
+		return nil, fmt.Errorf("op %s: err %w", op, err)
 	}
 	defer rows.Close()
 
 	for rows.Next() {
 		var user models.User
 		if err := rows.Scan(&user.ID, &user.FirstName, &user.LastName, &user.Age); err != nil {
-			return nil, fmt.Errorf("op: %s, %w", op, err)
+			return nil, fmt.Errorf("op %s: err %w", op, err)
 		}
 		answer = append(answer, user)
 	}
 
 	if err := rows.Err(); err != nil {
-		return nil, fmt.Errorf("op: %s, %w", op, err)
+		return nil, fmt.Errorf("op %s: err %w", op, err)
 	}
 
 	return answer, nil

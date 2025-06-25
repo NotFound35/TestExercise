@@ -13,19 +13,19 @@ func (p *PostgreSQL) ListUsersPostgreSQL(
 ) ([]models.User, error) {
 	const op = "ListUsersPostgreSQL"
 	query := `
-		SELECT id, first_name, last_name, age, created_at 
+		SELECT id, first_name, last_name, age, recording_date 
 		FROM users 
 		WHERE 
 		    is_deleted = false AND
-			($1 IS NULL OR age >= $1) AND
-			($2 IS NULL OR age <= $2) AND
-			($3 IS NULL OR created_at >= $3) AND
-			($4 IS NULL OR created_at <= $4)
+			($1::int IS NULL OR age >= $1) AND
+			($2::int IS NULL OR age <= $2) AND
+			($3::bigint IS NULL OR recording_date >= $3) AND
+			($4::bigint IS NULL OR recording_date <= $4)
 	`
 
 	rows, err := p.Db.QueryContext(ctx, query, minAge, maxAge, startDate, endDate)
 	if err != nil {
-		return nil, fmt.Errorf("op: %s, %w", op, err)
+		return nil, fmt.Errorf("op %s: err %w", op, err)
 	}
 	defer rows.Close()
 
@@ -40,7 +40,7 @@ func (p *PostgreSQL) ListUsersPostgreSQL(
 			&user.RecordingDate,
 		)
 		if err != nil {
-			return nil, fmt.Errorf("op: %s, %w", op, err)
+			return nil, fmt.Errorf("op %s: err %w", op, err)
 		}
 		users = append(users, user)
 	}
